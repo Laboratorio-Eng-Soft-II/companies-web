@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Authenticate service account
           command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service- account --key-file=-
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run:
           name: 'Deploy app'
@@ -55,6 +55,7 @@ workflows:
       - deploy:
           requires:
             - build
+            - test
           filters:
               branches:
                   only: master
