@@ -33,8 +33,7 @@ jobs:
     docker:
       - image: cimg/node:16.13.2
     steps:
-      - checkout
-      - run: npm install && npm run test
+      - run: npm run test
   deploy:
     working_directory: build/
     docker:
