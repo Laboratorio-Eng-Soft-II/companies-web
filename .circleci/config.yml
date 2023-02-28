@@ -36,7 +36,6 @@ jobs:
           at: ./
       - run: npm run test
   deploy:
-    working_directory: ./build
     docker:
       - image: google/cloud-sdk:latest
     steps:
@@ -49,7 +48,7 @@ jobs:
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run:
           name: 'Deploy app'
-          command: cd ./build && gsutil cp -r . gs://companies-static-website-bucket/companies
+          command: cd ./build && gsutil -m rsync -r -d . gs://companies-static-website-bucket/companies
 
 workflows:
   build-test-deploy:
