@@ -32,12 +32,16 @@ jobs:
     steps:
       - checkout:
           path: ./
+      - attach_workspace:
+          at: ./
       - run: npm run test
   deploy:
     working_directory: ./build
     docker:
       - image: google/cloud-sdk:latest
     steps:
+      - attach_workspace:
+          at: ./
       - run:
           name: Authenticate service account
           command: |
