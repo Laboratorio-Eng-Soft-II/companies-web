@@ -28,11 +28,13 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - node_modules
+            - ./node_modules
+            - ./build
   test:
     docker:
       - image: cimg/node:16.13.2
     steps:
+      - checkout 
       - run: ls && npm run test
   deploy:
     working_directory: build/
