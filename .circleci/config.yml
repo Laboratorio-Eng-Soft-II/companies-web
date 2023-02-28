@@ -1,0 +1,60 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.13.2
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Build React App
+          command: npm run build
+      - save_cache:
+          key: app-build-cache-{{ .Branch }}
+          paths:
+            - ./build
+  test:
+    docker:
+      - image: cimg/node:16.13.2
+    steps:
+      - checkout
+      - run: npm run test
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - run:
+        name: Authenticate service account
+        command: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-    account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run:
+          name: 'Deploy app'
+          command: cd ./build && gsutil cp -r . gs://companies-static-website-bucket/companies
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - test
+      - build
+        requires:
+          - test
+      - deploy:
+        requires:
+          - build
+        filters:
+          branches:
+            only: master
