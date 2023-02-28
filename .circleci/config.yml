@@ -25,15 +25,16 @@ jobs:
           key: app-build-cache-{{ .Branch }}
           paths:
             - ./build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - node_modules
   test:
     docker:
       - image: cimg/node:16.13.2
     steps:
       - checkout
-      - run: npm run test
-      - restore_cache:
-          keys:
-            - node-modules-{{ checksum "package-lock.json" }}
+      - run: npm install && npm run test
   deploy:
     working_directory: build/
     docker:
