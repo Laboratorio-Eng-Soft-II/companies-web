@@ -49,7 +49,7 @@ workflows:
   build-test-deploy:
     jobs:
       - test
-      - build
+      - build:
         requires:
           - test
       - deploy:
