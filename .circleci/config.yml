@@ -21,22 +21,20 @@ jobs:
       - run:
           name: Build React App
           command: npm run build
-      - save_cache:
-          key: app-build-cache-{{ .Branch }}
-          paths:
-            - ./build
       - persist_to_workspace:
           root: ./
           paths:
-            - ./node_modules
-            - ./build
+            - ./node_modules/
+            - ./build/
   test:
     docker:
       - image: cimg/node:16.13.2
     steps:
-      - run: cd ../../ && npm run test
+      - checkout:
+          path: ./
+      - run: npm run test
   deploy:
-    working_directory: build/
+    working_directory: ./build
     docker:
       - image: google/cloud-sdk:latest
     steps:
