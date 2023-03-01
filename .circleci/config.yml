@@ -57,13 +57,13 @@ workflows:
             - test:
                   requires:
                       - build
-            - request-testing:
+            - manual-approval:
                   type: approval
                   requires:
                       - test
             - deploy:
                   requires:
-                      - request-testing
+                      - manual-approval
                   filters:
                       branches:
                           only: master
