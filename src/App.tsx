@@ -1,26 +1,17 @@
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
 import { ApolloProvider } from '@apollo/client'
 import { api } from './app/data/graphql'
+import { CompaniesRoutes } from './app/routes/companies/companies-routes.routes'
+import { AppContainer, GlobalStyled } from './app-styles'
 
 function App() {
     return (
         <ApolloProvider client={api}>
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>Companies</p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                </header>
-            </div>
+            <GlobalStyled />
+            <AppContainer>
+                <CompaniesRoutes />
+            </AppContainer>
         </ApolloProvider>
     )
 }
