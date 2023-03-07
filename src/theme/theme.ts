@@ -18,7 +18,11 @@ export enum FontFamily {
     PRIMARY = 'Open Sans',
 }
 
-export const FontSize = {}
+export const FontSize = {
+    sm: '12px',
+    md: '18px',
+    lg: '28px',
+}
 
 export enum FontWeight {
     Light = 300,
@@ -26,4 +30,10 @@ export enum FontWeight {
     Medium = 500,
     SemiBold = 600,
     Bold = 700,
+}
+
+export const Border = {
+    Radius: '8px',
+    Width: '1px',
+    Color: Colors.gray,
 }

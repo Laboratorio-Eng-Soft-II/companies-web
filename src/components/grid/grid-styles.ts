@@ -11,5 +11,5 @@ interface ColProps {
 }
 
 export const Col = styled.div<ColProps>`
-    flex: ${props => props.size};
+    flex: ${props => props.size ?? 1};
 `
