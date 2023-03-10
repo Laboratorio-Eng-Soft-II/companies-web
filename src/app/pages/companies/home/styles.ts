@@ -15,4 +15,5 @@ export const CardsContainer = styled.div`
     flex-direction: row;
     max-width: 70%;
     gap: ${Spacing.Medium};
+    flex-wrap: wrap;
 `

@@ -9,8 +9,17 @@ export const CardContainer = styled.div`
     border-radius: 8px;
     background-color: ${Colors.gray};
     padding: ${Spacing.Medium};
+
     min-width: 150px;
     min-height: 150px;
     max-width: 150px;
     max-height: 150px;
+
+    cursor: pointer;
+
+    :hover {
+        box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+    }
+
+    transition: box-shadow 0.3s;
 `

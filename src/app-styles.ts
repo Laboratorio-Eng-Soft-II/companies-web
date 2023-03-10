@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import { Colors } from './theme'
+import { Colors, FontFamily } from './theme'
 
 export const AppContainer = styled.div`
     display: flex;
@@ -10,8 +10,11 @@ export const AppContainer = styled.div`
 export const GlobalStyled = createGlobalStyle`
   * {
     box-sizing: border-box;
+    font-family: ${FontFamily.PRIMARY};
   }
   body {
     margin: 0;
+    padding: 40px 120px; 
+    background-color: ${Colors.grayLight};
   }
 `
