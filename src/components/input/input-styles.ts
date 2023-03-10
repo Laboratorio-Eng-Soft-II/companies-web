@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { Border, Colors, Spacing, FontSize } from '../../theme'
+import { Border, Colors, Spacing, FontSize, FontWeight } from '../../theme'
 
-const fieldHeight = 32
+const fieldHeight = 44
 
 export const InputStyled = styled.input`
     width: 100%;
@@ -27,7 +27,7 @@ export const InputStyled = styled.input`
 `
 
 export const InputLabel = styled.label`
-    color: 'black';
+    color: ${Colors.grayDark};
     font-size: ${FontSize.sm};
-    font-weight: bold;
+    font-weight: ${FontWeight.SemiBold};
 `

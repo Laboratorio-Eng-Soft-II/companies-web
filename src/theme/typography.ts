@@ -12,7 +12,14 @@ export const H1 = styled.h1`
     font-family: ${FontFamily.PRIMARY};
 `
 
-export const Body = styled.p`
+type TextAlign = 'center' | 'left' | 'right'
+
+interface BodyProps {
+    textAlign?: TextAlign
+}
+
+export const Body = styled.p<BodyProps>`
     font-family: ${FontFamily.PRIMARY};
     font-weight: ${FontWeight.Regular};
+    text-align: ${props => props.textAlign ?? 'inherit'};
 `

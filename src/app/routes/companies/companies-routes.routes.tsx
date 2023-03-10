@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { CompaniesHomePage } from '../../pages/companies/home/companies-home.page'
+import { PublishJobPage } from '../../pages/companies/publish-job'
 import { CompanySignUpPage } from '../../pages/companies/sign-up/company-sign-up.page'
 import { AppPath } from '../app.path'
 
@@ -16,6 +17,10 @@ export const CompaniesRoutes = () => {
                 <Route
                     path={companies.signUp}
                     element={<CompanySignUpPage />}
+                />
+                <Route
+                    path={companies.publishJob}
+                    element={<PublishJobPage />}
                 />
             </Routes>
         </BrowserRouter>

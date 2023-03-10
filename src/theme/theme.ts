@@ -2,6 +2,7 @@ export const Colors = {
     grayLight: '#F5F5F5',
     gray: '#E7E7E7',
     primary: '#334455',
+    grayDark: '#212529',
 }
 
 export enum Spacing {
@@ -19,9 +20,11 @@ export enum FontFamily {
 }
 
 export const FontSize = {
-    sm: '12px',
+    xsm: '14px',
+    sm: '16px',
     md: '18px',
-    lg: '28px',
+    lg: '20px',
+    xlg: '28px',
 }
 
 export enum FontWeight {

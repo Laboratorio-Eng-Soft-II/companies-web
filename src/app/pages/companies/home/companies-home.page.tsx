@@ -8,9 +8,12 @@ import {
     faListAlt,
     faStar,
 } from '@fortawesome/free-regular-svg-icons'
+import { useNavigate } from 'react-router-dom'
 import { Body, H1 } from '../../../../theme'
+import { AppPath } from '../../../routes/app.path'
 
 export const CompaniesHomePage = () => {
+    const navigate = useNavigate()
     return (
         <Container>
             <img
@@ -20,14 +23,18 @@ export const CompaniesHomePage = () => {
                 alt="logo da Poli"
             ></img>
             <H1>Internship 4.0 - Portal de estágios</H1>
-            <Body>
+            <Body textAlign="center">
                 O Portal de Estágios é o Ecossistema de Talentos da Escola
                 Politécnica da Universidade de São Paulo. Aqui a Escola, as
                 Empresas e os Alunos transformam sonhos em realidades
             </Body>
             <CardsContainer>
                 <Card icon={faBuilding} title="Sua Empresa" />
-                <Card icon={faFileAlt} title="Publicar Vaga" />
+                <Card
+                    icon={faFileAlt}
+                    title="Publicar Vaga"
+                    onClick={() => navigate(AppPath.companies.publishJob)}
+                />
                 <Card icon={faListAlt} title="Todas as Vagas" />
                 <Card icon={faCalendar} title="Calendário" />
                 <Card icon={faStar} title="Avaliação do Estagiário" />

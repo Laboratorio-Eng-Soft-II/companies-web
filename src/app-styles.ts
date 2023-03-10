@@ -14,5 +14,7 @@ export const GlobalStyled = createGlobalStyle`
   }
   body {
     margin: 0;
+    padding: 40px 120px; 
+    background-color: ${Colors.grayLight};
   }
 `
