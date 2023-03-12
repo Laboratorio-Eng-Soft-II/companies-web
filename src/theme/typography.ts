@@ -8,17 +8,18 @@ export const Label = styled.p`
     text-align: center;
 `
 
-export const H1 = styled.h1`
-    font-family: ${FontFamily.PRIMARY};
-`
-
 type TextAlign = 'center' | 'left' | 'right'
 
-interface BodyProps {
+interface TextProps {
     textAlign?: TextAlign
 }
 
-export const Body = styled.p<BodyProps>`
+export const H1 = styled.h1<TextProps>`
+    font-family: ${FontFamily.PRIMARY};
+    text-align: ${props => props.textAlign ?? 'inherit'};
+`
+
+export const Body = styled.p<TextProps>`
     font-family: ${FontFamily.PRIMARY};
     font-weight: ${FontWeight.Regular};
     text-align: ${props => props.textAlign ?? 'inherit'};
