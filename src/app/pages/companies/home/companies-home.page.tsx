@@ -22,7 +22,7 @@ export const CompaniesHomePage = () => {
                 src={logoPoli}
                 alt="logo da Poli"
             ></img>
-            <H1>Internship 4.0 - Portal de estágios</H1>
+            <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
             <Body textAlign="center">
                 O Portal de Estágios é o Ecossistema de Talentos da Escola
                 Politécnica da Universidade de São Paulo. Aqui a Escola, as
