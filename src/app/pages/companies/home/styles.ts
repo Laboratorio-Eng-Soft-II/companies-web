@@ -13,7 +13,8 @@ export const Container = styled.div`
 export const CardsContainer = styled.div`
     display: flex;
     flex-direction: row;
-    max-width: 70%;
+    justify-content: center;
+    max-width: 80%;
     gap: ${Spacing.Medium};
     flex-wrap: wrap;
 `
