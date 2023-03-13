@@ -1,4 +1,6 @@
+import { Separator } from 'components/box/box.styles'
 import { InputHTMLAttributes } from 'react'
+import { Spacing } from '../../theme'
 import { Col, Row } from '../grid'
 import { InputLabel, InputStyled } from './input-styles'
 
@@ -11,6 +13,7 @@ export const Input: React.FC<InputProps> = ({ label, children, ...props }) => {
         <Row>
             <Col>
                 {!!label && <InputLabel>{label}</InputLabel>}
+                <Separator size={Spacing.XSmall} />
                 <InputStyled {...props} />
             </Col>
         </Row>
