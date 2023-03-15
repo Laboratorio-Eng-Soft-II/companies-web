@@ -48,7 +48,7 @@ jobs:
                       gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             - run:
                   name: 'Deploy app'
-                  command: cd ./build && gsutil -m rsync -r -d . gs://companies-static-website-bucket/companies
+                  command: gcloud app deploy
 
 workflows:
     build-test-deploy:
