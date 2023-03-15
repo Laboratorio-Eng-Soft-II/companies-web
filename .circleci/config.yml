@@ -58,13 +58,7 @@ workflows:
             - test:
                   requires:
                       - build
-            - manual-approval:
-                  type: approval
-                  requires:
-                      - test
             - deploy:
-                  requires:
-                      - manual-approval
                   filters:
                       branches:
                           only: master
