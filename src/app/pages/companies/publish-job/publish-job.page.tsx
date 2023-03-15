@@ -2,7 +2,7 @@ import logoPoli from '../../../../assets/LogoEPUSP.png'
 import { CenterView } from '../../../../components/center-view/center-view.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Controller, useForm, SubmitHandler } from 'react-hook-form'
-import { Input } from '../../../../components/input'
+import { Input, TextArea } from '../../../../components/input'
 import { Button } from '../../../../components/button'
 import { H1, H2 } from '../../../../theme'
 import { Separator } from '../../../../components/box/box.styles'
@@ -41,7 +41,7 @@ export const PublishJobPage: React.FC = () => {
             ></img>
             <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
             <H2>Publique sua vaga</H2>
-            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '70%' }}>
                 <Row>
                     <Col>
                         <Controller
@@ -64,7 +64,7 @@ export const PublishJobPage: React.FC = () => {
                             name="description"
                             control={control}
                             render={({ field }) => (
-                                <Input
+                                <TextArea
                                     label="Descrição"
                                     placeholder="Adicione um descrição à vaga"
                                     {...field}
@@ -80,7 +80,7 @@ export const PublishJobPage: React.FC = () => {
                             name="requirements"
                             control={control}
                             render={({ field }) => (
-                                <Input
+                                <TextArea
                                     label="Requisitos"
                                     placeholder="Adicione os requisitos necessários para a vaga"
                                     {...field}
@@ -88,15 +88,13 @@ export const PublishJobPage: React.FC = () => {
                             )}
                         />
                     </Col>
-                </Row>
-                <Separator />
-                <Row>
+                    <Separator horizontal />
                     <Col>
                         <Controller
                             name="activities"
                             control={control}
                             render={({ field }) => (
-                                <Input
+                                <TextArea
                                     label="Atividades principais"
                                     placeholder="Descreva o que será desenvolvido durante o estágio"
                                     {...field}
@@ -123,6 +121,7 @@ export const PublishJobPage: React.FC = () => {
                     </Col>
                 </Row>
                 <Separator />
+
                 <Row>
                     <Button type="submit" expanded>
                         Enviar

@@ -2,7 +2,7 @@ export const Colors = {
     background: '#083D77',
     primary: '#EBEBD3',
     secondary: '#061B55',
-    callToAction: '#00002D',
+    callToAction: '#ff8811',
     black: '#222222',
 }
 
