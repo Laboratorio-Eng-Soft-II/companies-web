@@ -17,8 +17,8 @@ export const InputStyled = styled.input`
     }
 
     :hover {
-        box-shadow: inset 0 0 0 ${Border.Width} ${Colors.gray};
-        border-color: ${Colors.gray};
+        box-shadow: inset 0 0 0 ${Border.Width} ${Colors.secondary};
+        border-color: ${Colors.secondary};
     }
 
     -webkit-appearance: none;
@@ -27,7 +27,7 @@ export const InputStyled = styled.input`
 `
 
 export const InputLabel = styled.label`
-    color: ${Colors.grayDark};
+    color: ${Colors.primary};
     font-size: ${FontSize.sm};
     font-weight: ${FontWeight.SemiBold};
 `

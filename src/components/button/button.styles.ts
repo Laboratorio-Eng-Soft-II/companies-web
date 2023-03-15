@@ -11,7 +11,7 @@ export const ButtonStyled = styled.button<ButtonStyledProps>`
     align-items: center;
     text-decoration: none;
     outline: none;
-    background-color: ${Colors.primary};
+    background-color: ${Colors.callToAction};
     color: white;
     font-weight: bold;
     font-size: ${FontSize.md};

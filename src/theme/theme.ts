@@ -1,8 +1,9 @@
 export const Colors = {
-    grayLight: '#F5F5F5',
-    gray: '#E7E7E7',
-    primary: '#334455',
-    grayDark: '#212529',
+    background: '#083D77',
+    primary: '#EBEBD3',
+    secondary: '#061B55',
+    callToAction: '#00002D',
+    black: '#222222',
 }
 
 export enum Spacing {
@@ -38,5 +39,5 @@ export enum FontWeight {
 export const Border = {
     Radius: '8px',
     Width: '1px',
-    Color: Colors.gray,
+    Color: Colors.black,
 }

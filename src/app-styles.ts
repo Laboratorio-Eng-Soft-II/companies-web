@@ -5,7 +5,7 @@ export const AppContainer = styled.div`
     display: flex;
     flex: 1;
     height: 100vh;
-    background-color: ${Colors.grayLight};
+    background-color: ${Colors.background};
 `
 export const GlobalStyled = createGlobalStyle`
   * {
@@ -15,6 +15,6 @@ export const GlobalStyled = createGlobalStyle`
   body {
     margin: 0;
     padding: 40px 120px; 
-    background-color: ${Colors.grayLight};
+    background-color: ${Colors.background};
   }
 `
