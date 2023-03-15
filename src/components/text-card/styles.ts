@@ -16,7 +16,7 @@ export const TextCardContainer = styled.div`
     cursor: pointer;
 
     :hover {
-        box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+        box-shadow: 0 0 11px rgba(180, 180, 180, 0.3);
     }
 
     transition: box-shadow 0.3s;
