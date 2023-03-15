@@ -3,5 +3,6 @@ export const AppPath = {
         home: '/companies/home',
         signUp: '/companies/sign-up',
         publishJob: '/companies/publish-job',
+        positions: '/companies/positions',
     },
 }

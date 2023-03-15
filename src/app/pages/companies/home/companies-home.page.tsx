@@ -35,7 +35,11 @@ export const CompaniesHomePage = () => {
                     title="Publicar Vaga"
                     onClick={() => navigate(AppPath.companies.publishJob)}
                 />
-                <Card icon={faListAlt} title="Todas as Vagas" />
+                <Card
+                    icon={faListAlt}
+                    title="Todas as Vagas"
+                    onClick={() => navigate(AppPath.companies.positions)}
+                />
                 <Card icon={faCalendar} title="Calendário" />
                 <Card icon={faStar} title="Avaliação do Estagiário" />
             </CardsContainer>

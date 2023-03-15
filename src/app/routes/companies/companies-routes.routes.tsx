@@ -1,3 +1,4 @@
+import { PositionsPage } from 'app/pages/companies/positions'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { CompaniesHomePage } from '../../pages/companies/home/companies-home.page'
 import { PublishJobPage } from '../../pages/companies/publish-job'
@@ -22,6 +23,7 @@ export const CompaniesRoutes = () => {
                     path={companies.publishJob}
                     element={<PublishJobPage />}
                 />
+                <Route path={companies.positions} element={<PositionsPage />} />
             </Routes>
         </BrowserRouter>
     )
