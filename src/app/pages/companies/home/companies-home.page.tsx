@@ -11,6 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { Body, H1 } from '../../../../theme'
 import { AppPath } from '../../../routes/app.path'
+import { Separator } from 'components/box/box.styles'
 
 export const CompaniesHomePage = () => {
     const navigate = useNavigate()
@@ -28,6 +29,8 @@ export const CompaniesHomePage = () => {
                 Politécnica da Universidade de São Paulo. Aqui a Escola, as
                 Empresas e os Alunos transformam sonhos em realidades
             </Body>
+            <Separator />
+
             <CardsContainer>
                 <Card icon={faBuilding} title="Sua Empresa" />
                 <Card
