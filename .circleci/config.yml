@@ -39,6 +39,7 @@ jobs:
         docker:
             - image: google/cloud-sdk:latest
         steps:
+            - checkout
             - attach_workspace:
                   at: ./
             - run:
