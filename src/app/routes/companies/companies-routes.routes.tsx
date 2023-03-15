@@ -10,10 +10,7 @@ export const CompaniesRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route
-                    path="/companies"
-                    element={<Navigate to={companies.home} />}
-                />
+                <Route path="/*" element={<Navigate to={companies.home} />} />
                 <Route path={companies.home} element={<CompaniesHomePage />} />
                 <Route
                     path={companies.signUp}
