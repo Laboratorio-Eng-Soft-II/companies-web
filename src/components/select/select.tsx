@@ -1,15 +1,24 @@
 import { Col, Row } from 'components/grid'
-import Select, { GroupBase, Props } from 'react-select'
+import { Select } from 'antd'
+import type { SelectProps } from 'antd'
+import { InputLabel } from 'components/input/input-styles'
+import { Separator } from 'components/box/box.styles'
+import { Spacing } from 'theme'
 
-export function SelectField<
-    Option,
-    IsMulti extends boolean = false,
-    Group extends GroupBase<Option> = GroupBase<Option>,
->(props: Props<Option, IsMulti, Group>) {
+interface SelectFieldProps extends SelectProps {
+    label?: string
+}
+
+export const SelectField: React.FC<SelectFieldProps> = ({
+    label,
+    ...others
+}) => {
     return (
         <Row>
             <Col>
-                <Select {...props} />
+                <InputLabel>{label}</InputLabel>
+                <Separator size={Spacing.XSmall} />
+                <Select style={{ width: '100%' }} {...others} />
             </Col>
         </Row>
     )

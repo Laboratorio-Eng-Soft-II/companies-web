@@ -4,8 +4,11 @@ import { Row, Col } from '../../../../components/grid'
 import { Controller, useForm, SubmitHandler } from 'react-hook-form'
 import { Input, TextArea } from '../../../../components/input'
 import { Button } from '../../../../components/button'
-import { H1, H2 } from '../../../../theme'
-import { Separator } from '../../../../components/box/box.styles'
+import { H1, H2, LinkButton } from '../../../../theme'
+import { useNavigate } from 'react-router-dom'
+import { Hbox, Separator } from '../../../../components/box/box.styles'
+import { SelectField } from 'components/select'
+import { NumericFormat } from 'react-number-format'
 
 interface FormState {
     jobTitle: string
@@ -16,7 +19,15 @@ interface FormState {
     benefits: string
 }
 
+const options = [
+    { label: 'JavaScript', value: 'javascript' },
+    { label: 'ReactJS', value: 'reactjs' },
+    { label: 'NodeJs', value: 'nodejs' },
+    { label: 'Inglês', value: 'english' },
+]
+
 export const PublishJobPage: React.FC = () => {
+    const navigation = useNavigate()
     const { control, handleSubmit } = useForm<FormState>({
         defaultValues: {
             jobTitle: '',
@@ -76,19 +87,17 @@ export const PublishJobPage: React.FC = () => {
                 <Separator />
                 <Row>
                     <Col>
-                        <Controller
-                            name="requirements"
-                            control={control}
-                            render={({ field }) => (
-                                <TextArea
-                                    label="Requisitos"
-                                    placeholder="Adicione os requisitos necessários para a vaga"
-                                    {...field}
-                                />
-                            )}
+                        <SelectField
+                            label="Requisitos"
+                            mode="multiple"
+                            allowClear
+                            placeholder="Selecione os requisitos"
+                            options={options}
                         />
                     </Col>
-                    <Separator horizontal />
+                </Row>
+                <Separator />
+                <Row>
                     <Col>
                         <Controller
                             name="activities"
@@ -106,26 +115,42 @@ export const PublishJobPage: React.FC = () => {
                 <Separator />
                 <Row>
                     <Col>
-                        <Controller
-                            name="salary"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Remuneração"
-                                    placeholder="R$ 0,00"
-                                    type="number"
-                                    {...field}
-                                />
-                            )}
+                        <NumericFormat
+                            prefix="R$"
+                            placeholder="R$ 0,00"
+                            thousandSeparator="."
+                            decimalSeparator=","
+                            decimalScale={2}
+                            thousandsGroupStyle="thousand"
+                            style={{
+                                width: '100%',
+                                borderRadius: '8px',
+                                height: '44px',
+                                padding: '12px',
+                            }}
                         />
                     </Col>
                 </Row>
                 <Separator />
 
                 <Row>
-                    <Button type="submit" expanded>
-                        Enviar
-                    </Button>
+                    <Col>
+                        <Hbox hAlign="flex-end">
+                            <Hbox.Item>
+                                <LinkButton
+                                    onClick={() =>
+                                        navigation('/companies/home')
+                                    }
+                                >
+                                    Voltar
+                                </LinkButton>
+                            </Hbox.Item>
+                            <Hbox.Separator />
+                            <Hbox.Item>
+                                <Button type="submit">Enviar</Button>
+                            </Hbox.Item>
+                        </Hbox>
+                    </Col>
                 </Row>
                 <Separator />
             </form>

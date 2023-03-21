@@ -1,3 +1,4 @@
+import { Button } from 'components/button'
 import styled from 'styled-components'
 import { Colors, FontFamily, FontWeight } from './theme'
 
@@ -31,4 +32,10 @@ export const Body = styled.p<TextProps>`
     font-weight: ${FontWeight.Regular};
     text-align: ${props => props.textAlign ?? 'inherit'};
     color: ${Colors.primary};
+`
+
+export const LinkButton = styled(Button)`
+    background-color: transparent;
+    border-color: transparent;
+    text-decoration: underline;
 `
