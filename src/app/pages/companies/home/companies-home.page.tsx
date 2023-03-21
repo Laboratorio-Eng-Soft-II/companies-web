@@ -51,7 +51,11 @@ export const CompaniesHomePage = () => {
                     title="Calendário"
                     onClick={() => window.open(uspCalendarURL)}
                 />
-                <Card icon={faStar} title="Avaliação do Estagiário" />
+                <Card
+                    icon={faStar}
+                    title="Avaliação do Estagiário"
+                    onClick={() => navigate(AppPath.companies.traineeReview)}
+                />
             </CardsContainer>
         </Container>
     )
