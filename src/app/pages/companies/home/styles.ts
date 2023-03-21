@@ -8,6 +8,7 @@ export const Container = styled.div`
     align-items: center;
     padding: ${Spacing.Medium};
     flex-direction: column;
+    overflow: hidden;
 `
 
 export const CardsContainer = styled.div`

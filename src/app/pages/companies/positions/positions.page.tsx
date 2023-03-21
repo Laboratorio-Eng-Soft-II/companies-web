@@ -1,8 +1,9 @@
-import { Separator } from 'components/box/box.styles'
+import { Hbox, Separator } from 'components/box/box.styles'
 import { TextCard } from 'components/text-card'
 import logoPoli from '../../../../assets/LogoEPUSP.png'
-import { H1, H2, Spacing } from '../../../../theme'
+import { H1, H2, LinkButton, Spacing } from '../../../../theme'
 import { Container } from '../home/styles'
+import { useNavigate } from 'react-router-dom'
 
 const MOCK_POSITIONS = [
     {
@@ -29,6 +30,7 @@ const MOCK_POSITIONS = [
 ]
 
 export const PositionsPage: React.FC = () => {
+    const navigate = useNavigate()
     return (
         <Container>
             <img
@@ -39,9 +41,10 @@ export const PositionsPage: React.FC = () => {
             ></img>
             <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
             <H2>Todas as vagas</H2>
-            {MOCK_POSITIONS.map(position => (
+            {MOCK_POSITIONS.map((position, index) => (
                 <>
                     <TextCard
+                        key={`${position}-${index}`}
                         title={position.title + ' - ' + position.description}
                         onClick={() =>
                             console.log(
@@ -52,6 +55,13 @@ export const PositionsPage: React.FC = () => {
                     <Separator size={Spacing.Small} />
                 </>
             ))}
+            <Hbox>
+                <Hbox.Item>
+                    <LinkButton onClick={() => navigate('/companies/home')}>
+                        Voltar
+                    </LinkButton>
+                </Hbox.Item>
+            </Hbox>
         </Container>
     )
 }
