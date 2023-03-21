@@ -14,6 +14,9 @@ import { AppPath } from '../../../routes/app.path'
 import { Separator } from 'components/box/box.styles'
 
 export const CompaniesHomePage = () => {
+    const uspCalendarURL =
+        'https://uspdigital.usp.br/jupiterweb/jupArquivosPublicos.jsp?tiparq=9&anoprg=2023&codmnu=6863'
+
     const navigate = useNavigate()
     return (
         <Container>
@@ -43,7 +46,11 @@ export const CompaniesHomePage = () => {
                     title="Todas as Vagas"
                     onClick={() => navigate(AppPath.companies.positions)}
                 />
-                <Card icon={faCalendar} title="Calendário" />
+                <Card
+                    icon={faCalendar}
+                    title="Calendário"
+                    onClick={() => window.open(uspCalendarURL)}
+                />
                 <Card icon={faStar} title="Avaliação do Estagiário" />
             </CardsContainer>
         </Container>
