@@ -9,7 +9,7 @@ export const Label = styled.p`
     text-align: center;
 `
 
-type TextAlign = 'center' | 'left' | 'right'
+type TextAlign = 'center' | 'left' | 'right' | 'inherit'
 
 interface TextProps {
     textAlign?: TextAlign
