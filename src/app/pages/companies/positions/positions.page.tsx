@@ -4,14 +4,16 @@ import logoPoli from '../../../../assets/LogoEPUSP.png'
 import { H1, H2, LinkButton, Spacing } from '../../../../theme'
 import { Container } from '../home/styles'
 import { useNavigate } from 'react-router-dom'
+import { Fragment } from 'react'
 
-const MOCK_POSITIONS = [
+export const MOCK_POSITIONS = [
     {
         title: 'Vaga 1',
         description: 'Descrição sobre a vaga 1',
         requirements: [],
         activities: 'Desenvolvimento front-end de um aplicativo mobile',
         salary: 4000,
+        id: '1',
     },
     {
         title: 'Vaga 2',
@@ -19,6 +21,7 @@ const MOCK_POSITIONS = [
         requirements: [],
         activities: 'Desenvolvimento back-end de um servidor',
         salary: 5000,
+        id: '2',
     },
     {
         title: 'Vaga 3',
@@ -26,6 +29,7 @@ const MOCK_POSITIONS = [
         requirements: [],
         activities: 'Desenvolvimento full stack',
         salary: 6000,
+        id: '3',
     },
 ]
 
@@ -42,18 +46,15 @@ export const PositionsPage: React.FC = () => {
             <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
             <H2>Todas as vagas</H2>
             {MOCK_POSITIONS.map((position, index) => (
-                <>
+                <Fragment key={`${position}-${index}`}>
                     <TextCard
-                        key={`${position}-${index}`}
                         title={position.title + ' - ' + position.description}
                         onClick={() =>
-                            console.log(
-                                'TO DO: open ' + position.title + ' page',
-                            )
+                            navigate(`/companies/positions/${position.id}`)
                         }
                     />
                     <Separator size={Spacing.Small} />
-                </>
+                </Fragment>
             ))}
             <Hbox>
                 <Hbox.Item>

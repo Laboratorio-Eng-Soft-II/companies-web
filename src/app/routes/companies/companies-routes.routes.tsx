@@ -1,3 +1,4 @@
+import { PositionDetailsPage } from 'app/pages/companies/position-details/position-details'
 import { PositionsPage } from 'app/pages/companies/positions'
 import { TraineeReviewPage } from 'app/pages/companies/trainee-review'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -22,6 +23,10 @@ export const CompaniesRoutes = () => {
                     element={<PublishJobPage />}
                 />
                 <Route path={companies.positions} element={<PositionsPage />} />
+                <Route
+                    path={companies.positions + '/:id'}
+                    element={<PositionDetailsPage />}
+                />
                 <Route
                     path={companies.traineeReview}
                     element={<TraineeReviewPage />}

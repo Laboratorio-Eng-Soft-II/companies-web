@@ -1,3 +1,4 @@
+import { fieldDisabledStyle } from 'app-styles'
 import styled from 'styled-components'
 import { Border, Colors, Spacing } from 'theme'
 
@@ -22,6 +23,10 @@ export const TextAreaStyled = styled.textarea<TextAreaStyledProps>`
     :hover {
         box-shadow: inset 0 0 0 ${Border.Width} ${Colors.secondary};
         border-color: ${Colors.secondary};
+    }
+
+    :disabled {
+        ${fieldDisabledStyle};
     }
 
     -webkit-appearance: none;

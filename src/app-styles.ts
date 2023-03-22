@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 import { Colors, FontFamily } from './theme'
 
 export const AppContainer = styled.div`
@@ -17,4 +17,9 @@ export const GlobalStyled = createGlobalStyle`
     padding: 40px 120px; 
     background-color: ${Colors.background};
   }
+`
+
+export const fieldDisabledStyle = css`
+    background-color: ${Colors.gray};
+    color: ${Colors.black};
 `

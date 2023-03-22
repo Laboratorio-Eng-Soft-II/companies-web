@@ -4,6 +4,8 @@ export const Colors = {
     secondary: '#061B55',
     callToAction: '#ff8811',
     black: '#222222',
+    grayLight: '#DDDEDF',
+    gray: '#B9BBBC',
 }
 
 export enum Spacing {
