@@ -1,6 +1,12 @@
-import { Button } from 'components/button'
 import styled from 'styled-components'
-import { Colors, FontFamily, FontWeight } from './theme'
+import {
+    Border,
+    Colors,
+    FontFamily,
+    FontSize,
+    FontWeight,
+    Spacing,
+} from './theme'
 
 export const Label = styled.p`
     font-family: ${FontFamily.PRIMARY};
@@ -34,8 +40,20 @@ export const Body = styled.p<TextProps>`
     color: ${Colors.primary};
 `
 
-export const LinkButton = styled(Button)`
+export const LinkButton = styled.button`
     background-color: transparent;
     border-color: transparent;
     text-decoration: underline;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    font-size: ${FontSize.md};
+    padding: ${Spacing.Small} ${Spacing.Medium};
+    border-style: solid;
+    border-width: ${Border.Width};
+    border-radius: ${Border.Radius};
+    cursor: pointer;
 `
