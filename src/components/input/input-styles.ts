@@ -1,3 +1,4 @@
+import { fieldDisabledStyle } from 'app-styles'
 import styled from 'styled-components'
 import { Border, Colors, Spacing, FontSize, FontWeight } from '../../theme'
 
@@ -19,6 +20,10 @@ export const InputStyled = styled.input`
     :hover {
         box-shadow: inset 0 0 0 ${Border.Width} ${Colors.secondary};
         border-color: ${Colors.secondary};
+    }
+
+    :disabled {
+        ${fieldDisabledStyle};
     }
 
     -webkit-appearance: none;

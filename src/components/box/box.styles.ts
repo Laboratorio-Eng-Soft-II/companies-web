@@ -47,6 +47,7 @@ export const HboxStyled = styled.div<BoxProps>`
     ${props => (props.grow ? 'flex: 1;' : null)}
     justify-content: ${props => props.hAlign ?? 'stretch'};
     align-items: ${props => props.vAlign ?? null};
+    width: 100%;
 `
 export const Hbox: any = HboxStyled
 
