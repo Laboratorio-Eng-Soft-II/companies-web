@@ -1,3 +1,4 @@
+import { CompanyLoginPage } from 'app/pages/companies/login'
 import { PositionDetailsPage } from 'app/pages/companies/position-details/position-details'
 import { PositionsPage } from 'app/pages/companies/positions'
 import { TraineeReviewPage } from 'app/pages/companies/trainee-review'
@@ -31,6 +32,11 @@ export const CompaniesRoutes = () => {
                     path={companies.traineeReview}
                     element={<TraineeReviewPage />}
                 />
+                <Route
+                    path={companies.signUp}
+                    element={<CompanySignUpPage />}
+                />
+                <Route path={companies.login} element={<CompanyLoginPage />} />
             </Routes>
         </BrowserRouter>
     )
