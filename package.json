@@ -33,7 +33,7 @@
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
         "prettier": "prettier src -check",
-        "prepare": "husky install"
+        "prepare": "node -e \"if (process.env.NODE_ENV !== 'production'){process.exit(1)} \" || husky install"
     },
     "eslintConfig": {
         "extends": [
