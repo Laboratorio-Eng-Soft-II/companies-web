@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { SelectField } from 'components/select'
 import { NumericFormat } from 'react-number-format'
+import axios from 'axios'
+import { useState } from 'react'
+import { POSITIONS_BASE_URL } from 'utils'
 
 interface FormState {
     jobTitle: string
@@ -17,6 +20,7 @@ interface FormState {
     activities: string
     salary: number
     benefits: string
+    cnpj: string
 }
 
 const options = [
@@ -28,6 +32,10 @@ const options = [
 
 export const PublishJobPage: React.FC = () => {
     const navigation = useNavigate()
+
+    const [requirements, setRequirements] = useState([''])
+    const [salary, setSalary] = useState<number>()
+
     const { control, handleSubmit } = useForm<FormState>({
         defaultValues: {
             jobTitle: '',
@@ -36,11 +44,21 @@ export const PublishJobPage: React.FC = () => {
             activities: '',
             salary: 0,
             benefits: '',
+            cnpj: '',
         },
     })
 
-    const onSubmit: SubmitHandler<FormState> = data => {
-        console.log(data)
+    const onSubmit: SubmitHandler<FormState> = async data => {
+        const { cnpj, jobTitle, description, activities, benefits } = data
+        await axios.post(`${POSITIONS_BASE_URL}positions`, {
+            cnpj,
+            type: jobTitle,
+            description,
+            main_work: activities,
+            benefits,
+            salary,
+            requirements,
+        })
     }
     return (
         <CenterView>
@@ -93,6 +111,9 @@ export const PublishJobPage: React.FC = () => {
                             allowClear
                             placeholder="Selecione os requisitos"
                             options={options}
+                            onChange={value =>
+                                setRequirements(prev => [...prev, value])
+                            }
                         />
                     </Col>
                 </Row>
@@ -115,6 +136,22 @@ export const PublishJobPage: React.FC = () => {
                 <Separator />
                 <Row>
                     <Col>
+                        <Controller
+                            name="benefits"
+                            control={control}
+                            render={({ field }) => (
+                                <TextArea
+                                    label="Benefícios"
+                                    placeholder="Benfícios oferecidos"
+                                    {...field}
+                                />
+                            )}
+                        />
+                    </Col>
+                </Row>
+                <Separator />
+                <Row>
+                    <Col>
                         <NumericFormat
                             prefix="R$"
                             placeholder="R$ 0,00"
@@ -128,6 +165,23 @@ export const PublishJobPage: React.FC = () => {
                                 height: '44px',
                                 padding: '12px',
                             }}
+                            onValueChange={value => setSalary(value.floatValue)}
+                        />
+                    </Col>
+                </Row>
+                <Separator />
+                <Row>
+                    <Col>
+                        <Controller
+                            name="cnpj"
+                            control={control}
+                            render={({ field }) => (
+                                <Input
+                                    label="CNPJ da empresa"
+                                    placeholder="Digite o CNPJ"
+                                    {...field}
+                                />
+                            )}
                         />
                     </Col>
                 </Row>
