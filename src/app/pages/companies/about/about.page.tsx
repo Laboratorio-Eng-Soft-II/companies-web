@@ -1,6 +1,4 @@
-import { Button } from 'components/button'
 import { CenterView } from 'components/center-view'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { H1, Spacing } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { Row, Col } from '../../../../components/grid'
