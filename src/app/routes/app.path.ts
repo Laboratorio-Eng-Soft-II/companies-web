@@ -6,5 +6,6 @@ export const AppPath = {
         positions: '/companies/positions',
         traineeReview: '/companies/trainee-review',
         login: '/companies/login',
+        about: '/companies/about',
     },
 }

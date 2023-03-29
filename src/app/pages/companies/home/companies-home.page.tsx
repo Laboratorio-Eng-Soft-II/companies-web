@@ -35,7 +35,11 @@ export const CompaniesHomePage = () => {
             <Separator />
 
             <CardsContainer>
-                <Card icon={faBuilding} title="Sua Empresa" />
+                <Card
+                    icon={faBuilding}
+                    title="Sua Empresa"
+                    onClick={() => navigate(AppPath.companies.about)}
+                />
                 <Card
                     icon={faFileAlt}
                     title="Publicar Vaga"
