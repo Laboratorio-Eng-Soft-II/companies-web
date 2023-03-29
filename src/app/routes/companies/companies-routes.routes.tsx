@@ -1,11 +1,12 @@
+import { AboutPage } from 'app/pages/companies/about'
+import { CompaniesHomePage } from 'app/pages/companies/home'
 import { CompanyLoginPage } from 'app/pages/companies/login'
-import { PositionDetailsPage } from 'app/pages/companies/position-details/position-details'
+import { PositionDetailsPage } from 'app/pages/companies/position-details'
 import { PositionsPage } from 'app/pages/companies/positions'
 import { TraineeReviewPage } from 'app/pages/companies/trainee-review'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { CompaniesHomePage } from '../../pages/companies/home/companies-home.page'
 import { PublishJobPage } from '../../pages/companies/publish-job'
-import { CompanySignUpPage } from '../../pages/companies/sign-up/company-sign-up.page'
+import { CompanySignUpPage } from '../../pages/companies/sign-up'
 import { AppPath } from '../app.path'
 
 export const CompaniesRoutes = () => {
@@ -37,6 +38,7 @@ export const CompaniesRoutes = () => {
                     element={<CompanySignUpPage />}
                 />
                 <Route path={companies.login} element={<CompanyLoginPage />} />
+                <Route path={companies.about} element={<AboutPage />} />
             </Routes>
         </BrowserRouter>
     )
