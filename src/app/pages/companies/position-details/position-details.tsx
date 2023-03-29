@@ -2,22 +2,33 @@ import { CenterView, Row, Col, Input, TextArea } from 'components'
 import { H1, H2, LinkButton } from 'theme/typography'
 import logoPoli from '../../../../assets/LogoEPUSP.png'
 import { useParams } from 'react-router'
-import { MOCK_POSITIONS } from '../positions'
+import { PositionModel } from '../positions'
 import { SelectField } from 'components/select'
 import { Hbox, Separator } from 'components/box/box.styles'
 import { useNavigate } from 'react-router'
 import { Spacing } from 'theme'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { POSITIONS_BASE_URL } from 'utils'
 
 interface RouteParams {
+    cnpj: string | undefined
     id: string | undefined
 }
 
 export const PositionDetailsPage: React.FC = () => {
     const params = useParams()
+    const [position, setPosition] = useState<PositionModel>()
 
-    const { id } = params as unknown as RouteParams
+    const { cnpj, id } = params as unknown as RouteParams
 
-    const position = MOCK_POSITIONS.find(position => position.id === id)
+    useEffect(() => {
+        axios
+            .get(`${POSITIONS_BASE_URL}positions/${cnpj}`)
+            .then(response =>
+                setPosition(response.data.find((item: any) => item.id === id)),
+            )
+    }, [cnpj, id])
 
     const navigate = useNavigate()
 
@@ -37,7 +48,7 @@ export const PositionDetailsPage: React.FC = () => {
                         <Col>
                             <Input
                                 disabled
-                                value={position?.title}
+                                value={position?.type}
                                 label="Título da Vaga"
                             />
                         </Col>
@@ -56,9 +67,13 @@ export const PositionDetailsPage: React.FC = () => {
                     <Row>
                         <Col>
                             <SelectField
-                                defaultValue={position?.requirements}
+                                defaultValue={position?.required_skills}
                                 label="Requisitos"
-                                options={position?.requirements}
+                                options={position?.required_skills.map(
+                                    value => {
+                                        return { value, label: value }
+                                    },
+                                )}
                             />
                         </Col>
                     </Row>
@@ -67,7 +82,7 @@ export const PositionDetailsPage: React.FC = () => {
                         <Col>
                             <TextArea
                                 disabled
-                                value={position?.activities}
+                                value={position?.main_work}
                                 label="Atividades a serem realizadas"
                             />
                         </Col>
