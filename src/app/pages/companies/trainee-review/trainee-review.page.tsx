@@ -4,11 +4,12 @@ import { Row, Col } from '../../../../components/grid'
 import { Controller, useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '../../../../components/input'
 import { Button } from '../../../../components/button'
-import { H1, H2 } from '../../../../theme'
-import { Separator } from '../../../../components/box/box.styles'
+import { H1, H2, LinkButton } from '../../../../theme'
+import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { StarRating } from 'components/star-rating/star-rating'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { InputLabel } from 'components/input/input-styles'
+import { useNavigate } from 'react-router-dom'
 
 interface FormState {
     traineeName: string
@@ -52,6 +53,8 @@ export const TraineeReviewPage: React.FC = () => {
         updatedRatings[index] = rating
         setActiveRatings(updatedRatings)
     }
+
+    const navigation = useNavigate()
 
     return (
         <CenterView>
@@ -123,9 +126,23 @@ export const TraineeReviewPage: React.FC = () => {
                 <Separator />
 
                 <Row>
-                    <Button type="submit" expanded>
-                        Enviar
-                    </Button>
+                    <Col>
+                        <Hbox hAlign="flex-end">
+                            <Hbox.Item>
+                                <LinkButton
+                                    onClick={() =>
+                                        navigation('/companies/home')
+                                    }
+                                >
+                                    Voltar
+                                </LinkButton>
+                            </Hbox.Item>
+                            <Hbox.Separator />
+                            <Hbox.Item>
+                                <Button type="submit">Enviar</Button>
+                            </Hbox.Item>
+                        </Hbox>
+                    </Col>
                 </Row>
                 <Separator />
             </form>
