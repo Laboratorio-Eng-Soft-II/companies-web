@@ -10,6 +10,8 @@ import { StarRating } from 'components/star-rating/star-rating'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { InputLabel } from 'components/input/input-styles'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { FEEDBACK_BASE_URL } from 'utils'
 
 interface FormState {
     traineeName: string
@@ -35,9 +37,18 @@ export const TraineeReviewPage: React.FC = () => {
         },
     })
 
-    const onSubmit: SubmitHandler<FormState> = data => {
+    const onSubmit: SubmitHandler<FormState> = async data => {
+        const { traineeName, comment } = data
         data.ratings = activeRatings
         console.log(data)
+
+        await axios.post(`${FEEDBACK_BASE_URL}feedback`, {
+            target: traineeName,
+            author: 'Teste',
+            answers: data.ratings,
+            comments: comment,
+            nusp_cnpj: '11262601',
+        })
     }
 
     const [activeRatings, setActiveRatings] = useState<number[]>(

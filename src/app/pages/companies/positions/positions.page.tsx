@@ -4,7 +4,9 @@ import logoPoli from '../../../../assets/LogoEPUSP.png'
 import { H1, H2, LinkButton, Spacing } from '../../../../theme'
 import { Container } from '../home/styles'
 import { useNavigate } from 'react-router-dom'
-import { Fragment } from 'react'
+import axios from 'axios'
+import { Fragment, useEffect, useState } from 'react'
+import { POSITIONS_BASE_URL } from 'utils'
 
 export const MOCK_POSITIONS = [
     {
@@ -33,8 +35,30 @@ export const MOCK_POSITIONS = [
     },
 ]
 
+const cnpj = '123'
+
+export interface PositionModel {
+    type: string
+    description: string
+    required_skills: string[]
+    main_work: string
+    salary: number
+    id: string
+    cnpj: string
+    benefits: string
+}
+
 export const PositionsPage: React.FC = () => {
     const navigate = useNavigate()
+
+    const [positions, setPositions] = useState<PositionModel[]>()
+
+    useEffect(() => {
+        axios
+            .get(`${POSITIONS_BASE_URL}positions/${cnpj}`)
+            .then(response => setPositions(response.data))
+    }, [])
+
     return (
         <Container>
             <img
@@ -45,10 +69,10 @@ export const PositionsPage: React.FC = () => {
             ></img>
             <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
             <H2>Todas as vagas</H2>
-            {MOCK_POSITIONS.map((position, index) => (
+            {positions?.map((position, index) => (
                 <Fragment key={`${position}-${index}`}>
                     <TextCard
-                        title={position.title + ' - ' + position.description}
+                        title={position.type + ' - ' + position.description}
                         onClick={() =>
                             navigate(`/companies/positions/${position.id}`)
                         }

@@ -5,37 +5,79 @@ import { H1, Spacing } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Input } from '../../../../components/input'
+import axios from 'axios'
+import { BASE_URL } from 'utils'
+import { useState } from 'react'
+import { FlashMessage } from 'components/flash-message/flash-message'
 
 interface IFormInput {
-    name: string
+    corporateName: string
     cnpj: string
-    area: string
-    street: string
+    field: string
+    address: string
     number: string
     phone: string
-    email: string
+    hrContactEmail: string
+    hrContactName: string
+    hrContactPhone: string
     password: string
 }
 
 export const CompanySignUpPage = () => {
+    const [showAlert, setShowAlert] = useState(false)
+
     const { handleSubmit, control } = useForm<IFormInput>({
         defaultValues: {
-            name: '',
+            corporateName: '',
             cnpj: '',
-            area: '',
-            street: '',
+            field: '',
+            address: '',
             number: '',
             phone: '',
-            email: '',
+            hrContactEmail: '',
+            hrContactName: '',
+            hrContactPhone: '',
             password: '',
         },
     })
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log(data)
+    const onSubmit: SubmitHandler<IFormInput> = async data => {
+        const {
+            cnpj,
+            corporateName,
+            address,
+            field,
+            phone,
+            hrContactEmail,
+            hrContactName,
+            hrContactPhone,
+        } = data
+        await axios
+            .post(`${BASE_URL}companies`, {
+                cnpj,
+                corporateName,
+                address,
+                field,
+                phone,
+                hrContactEmail,
+                hrContactName,
+                hrContactPhone,
+            })
+            .then(response => setShowAlert(true))
+            .catch(error => console.log(error))
     }
     return (
         <CenterView>
+            {showAlert && (
+                <FlashMessage
+                    banner
+                    showIcon
+                    type="success"
+                    afterClose={() => setShowAlert(false)}
+                    closable
+                    message="Empresa criada com sucesso!"
+                />
+            )}
             <Hbox>
                 <Hbox.Item hAlign="flex-start">
                     <H1>Cadastro de Empresa</H1>
@@ -45,7 +87,7 @@ export const CompanySignUpPage = () => {
                 <Row>
                     <Col size={1}>
                         <Controller
-                            name="name"
+                            name="corporateName"
                             control={control}
                             render={({ field }) => (
                                 <Input
@@ -77,7 +119,7 @@ export const CompanySignUpPage = () => {
                     <Separator horizontal size={Spacing.Small} />
                     <Col size={1} minWidth={100}>
                         <Controller
-                            name="area"
+                            name="field"
                             control={control}
                             render={({ field }) => (
                                 <Input
@@ -95,7 +137,7 @@ export const CompanySignUpPage = () => {
                 <Row>
                     <Col size={4} minWidth={100}>
                         <Controller
-                            name="street"
+                            name="address"
                             control={control}
                             render={({ field }) => (
                                 <Input
@@ -127,13 +169,41 @@ export const CompanySignUpPage = () => {
                 <Row>
                     <Col>
                         <Controller
-                            name="email"
+                            name="hrContactName"
                             control={control}
                             render={({ field }) => (
                                 <Input
-                                    label="Email"
+                                    label="Nome do representante"
+                                    placeholder="Digite o nome"
+                                    {...field}
+                                />
+                            )}
+                        />
+                    </Col>
+                    <Separator horizontal size={Spacing.Small} />
+                    <Col>
+                        <Controller
+                            name="hrContactEmail"
+                            control={control}
+                            render={({ field }) => (
+                                <Input
+                                    label="Email do RH"
                                     type="email"
                                     placeholder="exemplo@exemplo.com"
+                                    {...field}
+                                />
+                            )}
+                        />
+                    </Col>
+                    <Separator horizontal size={Spacing.Small} />
+                    <Col>
+                        <Controller
+                            name="hrContactPhone"
+                            control={control}
+                            render={({ field }) => (
+                                <Input
+                                    label="Telefone do representante"
+                                    placeholder="Digite o telefone"
                                     {...field}
                                 />
                             )}
@@ -149,10 +219,7 @@ export const CompanySignUpPage = () => {
                             name="phone"
                             control={control}
                             render={({ field }) => (
-                                <Input
-                                    label="Telefone para contato"
-                                    {...field}
-                                />
+                                <Input label="Telefone da empresa" {...field} />
                             )}
                         />
                     </Col>
