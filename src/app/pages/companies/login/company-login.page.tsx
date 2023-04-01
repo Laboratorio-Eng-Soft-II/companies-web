@@ -5,6 +5,8 @@ import { H1 } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Input } from '../../../../components/input'
+import { useNavigate } from 'react-router-dom'
+import { AppPath } from 'app/routes/app.path'
 
 interface IFormInput {
     email: string
@@ -12,6 +14,8 @@ interface IFormInput {
 }
 
 export const CompanyLoginPage = () => {
+    const navigate = useNavigate()
+
     const { handleSubmit, control } = useForm<IFormInput>({
         defaultValues: {
             email: '',
@@ -20,7 +24,7 @@ export const CompanyLoginPage = () => {
     })
 
     const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log(data)
+        navigate(AppPath.companies.home)
     }
     return (
         <CenterView>
@@ -68,7 +72,7 @@ export const CompanyLoginPage = () => {
 
                 <Separator />
 
-                <Button type="submit">Enviar</Button>
+                <Button type="submit">Login</Button>
             </form>
         </CenterView>
     )

@@ -1,7 +1,7 @@
 import { Button } from 'components/button'
 import { CenterView } from 'components/center-view'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { H1, Spacing } from 'theme'
+import { H1, LinkButton, Spacing } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Input } from '../../../../components/input'
@@ -9,6 +9,11 @@ import axios from 'axios'
 import { BASE_URL } from 'utils'
 import { useState } from 'react'
 import { FlashMessage } from 'components/flash-message/flash-message'
+import { PatternFormat } from 'react-number-format'
+import { InputLabel } from 'components/input/input-styles'
+import { useNavigate } from 'react-router-dom'
+import { AppPath } from 'app/routes/app.path'
+import { Button as AntdButton } from 'antd'
 
 interface IFormInput {
     corporateName: string
@@ -25,6 +30,8 @@ interface IFormInput {
 
 export const CompanySignUpPage = () => {
     const [showAlert, setShowAlert] = useState(false)
+
+    const navigate = useNavigate()
 
     const { handleSubmit, control } = useForm<IFormInput>({
         defaultValues: {
@@ -43,7 +50,6 @@ export const CompanySignUpPage = () => {
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         const {
-            cnpj,
             corporateName,
             address,
             field,
@@ -51,6 +57,7 @@ export const CompanySignUpPage = () => {
             hrContactEmail,
             hrContactName,
             hrContactPhone,
+            cnpj,
         } = data
         await axios
             .post(`${BASE_URL}companies`, {
@@ -63,7 +70,9 @@ export const CompanySignUpPage = () => {
                 hrContactName,
                 hrContactPhone,
             })
-            .then(response => setShowAlert(true))
+            .then(response => {
+                setShowAlert(true)
+            })
             .catch(error => console.log(error))
     }
     return (
@@ -74,8 +83,16 @@ export const CompanySignUpPage = () => {
                     showIcon
                     type="success"
                     afterClose={() => setShowAlert(false)}
-                    closable
                     message="Empresa criada com sucesso!"
+                    action={
+                        <AntdButton
+                            onClick={() => navigate(AppPath.companies.home)}
+                            type="link"
+                            size="small"
+                        >
+                            IR PARA HOME
+                        </AntdButton>
+                    }
                 />
             )}
             <Hbox>
@@ -108,11 +125,20 @@ export const CompanySignUpPage = () => {
                             name="cnpj"
                             control={control}
                             render={({ field }) => (
-                                <Input
-                                    label="CNPJ"
-                                    placeholder="Digite o CNPJ da empresa"
-                                    {...field}
-                                />
+                                <>
+                                    <InputLabel>CNPJ</InputLabel>
+                                    <PatternFormat
+                                        format="##.###.###/####-##"
+                                        style={{
+                                            width: '100%',
+                                            borderRadius: '8px',
+                                            height: '44px',
+                                            padding: '12px',
+                                        }}
+                                        placeholder="Digite o CNPJ da empresa"
+                                        {...field}
+                                    />
+                                </>
                             )}
                         />
                     </Col>
@@ -201,11 +227,20 @@ export const CompanySignUpPage = () => {
                             name="hrContactPhone"
                             control={control}
                             render={({ field }) => (
-                                <Input
-                                    label="Telefone do representante"
-                                    placeholder="Digite o telefone"
-                                    {...field}
-                                />
+                                <>
+                                    <InputLabel>Telefone do RH</InputLabel>
+                                    <PatternFormat
+                                        placeholder="Digite o telefone"
+                                        format="(##) #####-####"
+                                        style={{
+                                            width: '100%',
+                                            borderRadius: '8px',
+                                            height: '44px',
+                                            padding: '12px',
+                                        }}
+                                        {...field}
+                                    />
+                                </>
                             )}
                         />
                     </Col>
@@ -219,7 +254,19 @@ export const CompanySignUpPage = () => {
                             name="phone"
                             control={control}
                             render={({ field }) => (
-                                <Input label="Telefone da empresa" {...field} />
+                                <>
+                                    <InputLabel>Telefone da empresa</InputLabel>
+                                    <PatternFormat
+                                        format="(##) #####-####"
+                                        style={{
+                                            width: '100%',
+                                            borderRadius: '8px',
+                                            height: '44px',
+                                            padding: '12px',
+                                        }}
+                                        {...field}
+                                    />
+                                </>
                             )}
                         />
                     </Col>
@@ -240,7 +287,18 @@ export const CompanySignUpPage = () => {
                     </Col>
                 </Row>
                 <Separator />
-                <Button type="submit">Enviar</Button>
+                <Hbox>
+                    <Hbox.Item>
+                        <Button type="submit">Cadastrar</Button>
+                    </Hbox.Item>
+                    <Hbox.Item>
+                        <LinkButton
+                            onClick={() => navigate(AppPath.companies.login)}
+                        >
+                            Ir para login
+                        </LinkButton>
+                    </Hbox.Item>
+                </Hbox>
             </form>
         </CenterView>
     )
