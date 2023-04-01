@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
-import { Colors, FontFamily } from './theme'
+import { Colors, FontFamily, device } from './theme'
 
 export const AppContainer = styled.div`
     display: flex;
@@ -14,8 +14,16 @@ export const GlobalStyled = createGlobalStyle`
   }
   body {
     margin: 0;
-    padding: 40px 120px; 
     background-color: ${Colors.background};
+    padding: 5px 10px; 
+
+    @media ${device.mobileL} {
+      padding: 10px 40px; 
+    }
+
+    @media ${device.laptop} {
+      padding: 40px 120px; 
+    }
   }
 `
 
