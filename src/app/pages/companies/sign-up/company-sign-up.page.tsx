@@ -7,6 +7,8 @@ import { Row, Col } from '../../../../components/grid'
 import { Input } from '../../../../components/input'
 import axios from 'axios'
 import { BASE_URL } from 'utils'
+import { useState } from 'react'
+import { FlashMessage } from 'components/flash-message/flash-message'
 
 interface IFormInput {
     corporateName: string
@@ -22,6 +24,8 @@ interface IFormInput {
 }
 
 export const CompanySignUpPage = () => {
+    const [showAlert, setShowAlert] = useState(false)
+
     const { handleSubmit, control } = useForm<IFormInput>({
         defaultValues: {
             corporateName: '',
@@ -48,19 +52,32 @@ export const CompanySignUpPage = () => {
             hrContactName,
             hrContactPhone,
         } = data
-        await axios.post(`${BASE_URL}companies`, {
-            cnpj,
-            corporateName,
-            address,
-            field,
-            phone,
-            hrContactEmail,
-            hrContactName,
-            hrContactPhone,
-        })
+        await axios
+            .post(`${BASE_URL}companies`, {
+                cnpj,
+                corporateName,
+                address,
+                field,
+                phone,
+                hrContactEmail,
+                hrContactName,
+                hrContactPhone,
+            })
+            .then(response => setShowAlert(true))
+            .catch(error => console.log(error))
     }
     return (
         <CenterView>
+            {showAlert && (
+                <FlashMessage
+                    banner
+                    showIcon
+                    type="success"
+                    afterClose={() => setShowAlert(false)}
+                    closable
+                    message="Empresa criada com sucesso!"
+                />
+            )}
             <Hbox>
                 <Hbox.Item hAlign="flex-start">
                     <H1>Cadastro de Empresa</H1>

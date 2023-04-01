@@ -12,11 +12,13 @@ import { NumericFormat } from 'react-number-format'
 import axios from 'axios'
 import { useState } from 'react'
 import { POSITIONS_BASE_URL } from 'utils'
+import { InputLabel } from 'components/input/input-styles'
+import { FlashMessage } from 'components/flash-message/flash-message'
 
 interface FormState {
     jobTitle: string
     description: string
-    requirements: string
+    requirements: string[]
     activities: string
     salary: number
     benefits: string
@@ -35,12 +37,13 @@ export const PublishJobPage: React.FC = () => {
 
     const [requirements, setRequirements] = useState([''])
     const [salary, setSalary] = useState<number>()
+    const [showAlert, setShowAlert] = useState(false)
 
     const { control, handleSubmit } = useForm<FormState>({
         defaultValues: {
             jobTitle: '',
             description: '',
-            requirements: '',
+            requirements: [''],
             activities: '',
             salary: 0,
             benefits: '',
@@ -50,18 +53,36 @@ export const PublishJobPage: React.FC = () => {
 
     const onSubmit: SubmitHandler<FormState> = async data => {
         const { cnpj, jobTitle, description, activities, benefits } = data
-        await axios.post(`${POSITIONS_BASE_URL}positions`, {
-            cnpj,
-            type: jobTitle,
-            description,
-            main_work: activities,
-            benefits,
-            salary,
-            requirements,
-        })
+
+        try {
+            await axios.post(`${POSITIONS_BASE_URL}positions`, {
+                cnpj,
+                type: jobTitle,
+                description,
+                main_work: activities,
+                benefits,
+                salary,
+                requirements,
+            })
+            setShowAlert(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleRequirementsChange = (value: any) => {
+        setRequirements(value)
     }
     return (
         <CenterView>
+            {showAlert && (
+                <FlashMessage
+                    banner
+                    showIcon
+                    message="Vaga criada com sucesso"
+                    afterClose={() => setShowAlert(false)}
+                />
+            )}
             <img
                 width="100px"
                 height="100px"
@@ -111,9 +132,7 @@ export const PublishJobPage: React.FC = () => {
                             allowClear
                             placeholder="Selecione os requisitos"
                             options={options}
-                            onChange={value =>
-                                setRequirements(prev => [...prev, value])
-                            }
+                            onChange={value => handleRequirementsChange(value)}
                         />
                     </Col>
                 </Row>
@@ -152,6 +171,7 @@ export const PublishJobPage: React.FC = () => {
                 <Separator />
                 <Row>
                     <Col>
+                        <InputLabel>Remuneração</InputLabel>
                         <NumericFormat
                             prefix="R$"
                             placeholder="R$ 0,00"
