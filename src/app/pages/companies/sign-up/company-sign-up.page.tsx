@@ -1,19 +1,22 @@
-import { Button } from 'components/button'
 import { CenterView } from 'components/center-view'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { H1, LinkButton, Spacing } from 'theme'
+import { SubmitHandler } from 'react-hook-form'
+import { Spacing } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
-import { Row, Col } from '../../../../components/grid'
-import { Input } from '../../../../components/input'
 import axios from 'axios'
 import { BASE_URL } from 'utils'
 import { useState } from 'react'
 import { FlashMessage } from 'components/flash-message/flash-message'
 import { PatternFormat } from 'react-number-format'
-import { InputLabel } from 'components/input/input-styles'
 import { useNavigate } from 'react-router-dom'
 import { AppPath } from 'app/routes/app.path'
-import { Button as AntdButton } from 'antd'
+import {
+    Button as AntdButton,
+    Card,
+    Typography,
+    Input,
+    Form,
+    InputNumber,
+} from 'antd'
 
 interface IFormInput {
     corporateName: string
@@ -28,25 +31,14 @@ interface IFormInput {
     password: string
 }
 
+const { Title } = Typography
+
 export const CompanySignUpPage = () => {
     const [showAlert, setShowAlert] = useState(false)
 
     const navigate = useNavigate()
 
-    const { handleSubmit, control } = useForm<IFormInput>({
-        defaultValues: {
-            corporateName: '',
-            cnpj: '',
-            field: '',
-            address: '',
-            number: '',
-            phone: '',
-            hrContactEmail: '',
-            hrContactName: '',
-            hrContactPhone: '',
-            password: '',
-        },
-    })
+    const [form] = Form.useForm()
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         const {
@@ -95,211 +87,145 @@ export const CompanySignUpPage = () => {
                     }
                 />
             )}
-            <Hbox>
-                <Hbox.Item hAlign="flex-start">
-                    <H1>Cadastro de Empresa</H1>
-                </Hbox.Item>
-            </Hbox>
-            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
-                <Row>
-                    <Col size={1}>
-                        <Controller
-                            name="corporateName"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Nome da empresa"
-                                    placeholder="Digite o nome da empresa"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                </Row>
-
-                <Separator />
-
-                <Row>
-                    <Col size={1} minWidth={100}>
-                        <Controller
-                            name="cnpj"
-                            control={control}
-                            render={({ field }) => (
-                                <>
-                                    <InputLabel>CNPJ</InputLabel>
-                                    <PatternFormat
-                                        format="##.###.###/####-##"
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '8px',
-                                            height: '44px',
-                                            padding: '12px',
-                                        }}
-                                        placeholder="Digite o CNPJ da empresa"
-                                        {...field}
-                                    />
-                                </>
-                            )}
-                        />
-                    </Col>
-                    <Separator horizontal size={Spacing.Small} />
-                    <Col size={1} minWidth={100}>
-                        <Controller
-                            name="field"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Área de atuação"
-                                    placeholder="Ex: Mercado Financeiro"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                </Row>
-
-                <Separator />
-
-                <Row>
-                    <Col size={4} minWidth={100}>
-                        <Controller
-                            name="address"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Endereço"
-                                    placeholder="Digite o endereço da empresa"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                    <Separator horizontal size={Spacing.Small} />
-                    <Col minWidth={10}>
-                        <Controller
-                            name="number"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Número"
-                                    type="number"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                </Row>
-
-                <Separator />
-
-                <Row>
-                    <Col>
-                        <Controller
-                            name="hrContactName"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Nome do representante"
-                                    placeholder="Digite o nome"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                    <Separator horizontal size={Spacing.Small} />
-                    <Col>
-                        <Controller
-                            name="hrContactEmail"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Email do RH"
-                                    type="email"
-                                    placeholder="exemplo@exemplo.com"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                    <Separator horizontal size={Spacing.Small} />
-                    <Col>
-                        <Controller
-                            name="hrContactPhone"
-                            control={control}
-                            render={({ field }) => (
-                                <>
-                                    <InputLabel>Telefone do RH</InputLabel>
-                                    <PatternFormat
-                                        placeholder="Digite o telefone"
-                                        format="(##) #####-####"
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '8px',
-                                            height: '44px',
-                                            padding: '12px',
-                                        }}
-                                        {...field}
-                                    />
-                                </>
-                            )}
-                        />
-                    </Col>
-                </Row>
-
-                <Separator />
-
-                <Row>
-                    <Col minWidth={100}>
-                        <Controller
-                            name="phone"
-                            control={control}
-                            render={({ field }) => (
-                                <>
-                                    <InputLabel>Telefone da empresa</InputLabel>
-                                    <PatternFormat
-                                        format="(##) #####-####"
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '8px',
-                                            height: '44px',
-                                            padding: '12px',
-                                        }}
-                                        {...field}
-                                    />
-                                </>
-                            )}
-                        />
-                    </Col>
-                    <Separator horizontal size={Spacing.Small} />
-                    <Col minWidth={100}>
-                        <Controller
-                            name="password"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Senha"
-                                    placeholder="Senha para acesso à plataforma"
-                                    type="password"
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Col>
-                </Row>
-                <Separator />
+            <Card
+                bordered={false}
+                style={{ overflow: 'scroll', maxHeight: '95%', width: '80%' }}
+                type="inner"
+            >
                 <Hbox>
-                    <Hbox.Item>
-                        <Button type="submit">Cadastrar</Button>
-                    </Hbox.Item>
-                    <Hbox.Item>
-                        <LinkButton
-                            onClick={() => navigate(AppPath.companies.login)}
-                        >
-                            Ir para login
-                        </LinkButton>
+                    <Hbox.Item hAlign="flex-start">
+                        <Title level={2}>Cadastro de Empresa</Title>
                     </Hbox.Item>
                 </Hbox>
-            </form>
+                <Form
+                    onFinish={onSubmit}
+                    style={{ width: '100%', flex: 1 }}
+                    layout="vertical"
+                    form={form}
+                >
+                    <Form.Item name="corporateName" label="Nome da empresa">
+                        <Input placeholder="Digite o nome da empresa" />
+                    </Form.Item>
+                    <Hbox>
+                        <Hbox.Item grow>
+                            <Form.Item name="cnpj" label="CNPJ">
+                                <PatternFormat
+                                    format="##.###.###/####-##"
+                                    style={{
+                                        width: '100%',
+                                        borderRadius: '8px',
+                                        height: '32px',
+                                        padding: '8px',
+                                        border: '1px solid #d9d9d9',
+                                    }}
+                                    placeholder="Digite o CNPJ da empresa"
+                                />
+                            </Form.Item>
+                        </Hbox.Item>
+                        <Hbox.Separator />
+                        <Hbox.Item grow>
+                            <Form.Item name="field" label="Área de atuação">
+                                <Input placeholder="Ex: Mercado Financeiro" />
+                            </Form.Item>
+                        </Hbox.Item>
+                    </Hbox>
+                    <Separator />
+                    <Hbox>
+                        <Hbox.Item grow>
+                            <Form.Item name="address" label="Endereço">
+                                <Input placeholder="Digite o endereço da empresa" />
+                            </Form.Item>
+                        </Hbox.Item>
+                        <Hbox.Separator />
+                        <Hbox.Item>
+                            <Form.Item
+                                name="number"
+                                label="Número"
+                                style={{ flex: 1 }}
+                            >
+                                <InputNumber placeholder="Número" />
+                            </Form.Item>
+                        </Hbox.Item>
+                    </Hbox>
+                    <Separator />
+                    <Hbox>
+                        <Hbox.Item grow>
+                            <Form.Item
+                                name="hrContactName"
+                                label="Nome do representante"
+                            >
+                                <Input placeholder="Digite o nome" />
+                            </Form.Item>
+                        </Hbox.Item>
+                        <Separator horizontal size={Spacing.Small} />
+                        <Hbox.Item grow>
+                            <Form.Item
+                                name="hrContactEmail"
+                                label="Email do RH"
+                            >
+                                <Input placeholder="email@usp.br" />
+                            </Form.Item>
+                        </Hbox.Item>
+                        <Separator horizontal size={Spacing.Small} />
+                        <Hbox.Item grow>
+                            <Form.Item name="hrContactPhone" label="Contato RH">
+                                <PatternFormat
+                                    placeholder="Digite o telefone"
+                                    format="(##) #####-####"
+                                    style={{
+                                        width: '100%',
+                                        borderRadius: '8px',
+                                        height: '32px',
+                                        padding: '8px',
+                                        border: '1px solid #d9d9d9',
+                                    }}
+                                />
+                            </Form.Item>
+                        </Hbox.Item>
+                    </Hbox>
+                    <Separator />
+                    <Hbox>
+                        <Hbox.Item grow>
+                            <Form.Item name="phone" label="Telefone da empresa">
+                                <PatternFormat
+                                    format="(##) #####-####"
+                                    style={{
+                                        width: '100%',
+                                        borderRadius: '8px',
+                                        height: '32px',
+                                        padding: '8px',
+                                        border: '1px solid #d9d9d9',
+                                    }}
+                                />
+                            </Form.Item>
+                        </Hbox.Item>
+                        <Separator horizontal size={Spacing.Small} />
+                        <Hbox.Item grow>
+                            <Form.Item name="password" label="Senha">
+                                <Input.Password placeholder="Senha para acesso à plataforma" />
+                            </Form.Item>
+                        </Hbox.Item>
+                    </Hbox>
+                    <Separator />
+                    <Hbox>
+                        <Hbox.Item>
+                            <AntdButton type="primary" htmlType="submit">
+                                Cadastrar
+                            </AntdButton>
+                        </Hbox.Item>
+                        <Hbox.Item>
+                            <AntdButton
+                                type="text"
+                                onClick={() =>
+                                    navigate(AppPath.companies.login)
+                                }
+                            >
+                                Ir para login
+                            </AntdButton>
+                        </Hbox.Item>
+                    </Hbox>
+                </Form>
+            </Card>
         </CenterView>
     )
 }
