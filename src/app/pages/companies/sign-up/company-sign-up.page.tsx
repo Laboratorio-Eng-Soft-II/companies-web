@@ -50,6 +50,7 @@ export const CompanySignUpPage = () => {
             hrContactName,
             hrContactPhone,
             cnpj,
+            password,
         } = data
         await axios
             .post(`${BASE_URL}companies`, {
@@ -61,6 +62,7 @@ export const CompanySignUpPage = () => {
                 hrContactEmail,
                 hrContactName,
                 hrContactPhone,
+                password,
             })
             .then(response => {
                 setShowAlert(true)

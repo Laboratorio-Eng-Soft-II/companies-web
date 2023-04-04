@@ -3,7 +3,9 @@ import { SubmitHandler } from 'react-hook-form'
 import { Hbox } from '../../../../components/box/box.styles'
 import { useNavigate } from 'react-router-dom'
 import { AppPath } from 'app/routes/app.path'
+import axios from 'axios'
 import { Form, Input, Button, Card, Typography } from 'antd'
+import { AUTH_BASE_URL } from 'utils'
 
 interface IFormInput {
     email: string
@@ -17,9 +19,19 @@ export const CompanyLoginPage = () => {
 
     const [form] = Form.useForm()
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log(data)
-        navigate(AppPath.companies.home)
+    const onSubmit: SubmitHandler<IFormInput> = async data => {
+        const { email, password } = data
+
+        try {
+            const result = await axios.post(`${AUTH_BASE_URL}get-token`, {
+                email,
+                password,
+            })
+            localStorage.setItem('user', JSON.stringify(result))
+            navigate(AppPath.companies.home)
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (
         <CenterView>
