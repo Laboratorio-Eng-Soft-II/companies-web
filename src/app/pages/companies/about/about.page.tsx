@@ -3,18 +3,33 @@ import { H1, Spacing } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Input } from '../../../../components/input'
+import { useEffect, useState } from 'react'
+import { BASE_URL } from 'utils'
+import axios from 'axios'
 
-const MOCK_COMPANY = {
-    name: 'AGMS Softwares ltda.',
-    cnpj: '12.345.678/0001-90',
-    area: 'Desenvolvimento de software',
-    street: 'Av. Prof. Almeida Prado',
-    number: '128',
-    email: 'softwares@agms.com',
-    phone: '(11) 91234-5678',
+interface companyModel {
+    corporateName: string
+    cnpj: string
+    field: string
+    address: string
+    phone: string
+    hrContactEmail: string
+    hrContactName: string
+    hrContactPhone: string
 }
 
 export const AboutPage = () => {
+    const [company, setCompany] = useState<companyModel>()
+
+    useEffect(() => {
+        const storageUser = localStorage.getItem('user')
+        const user = storageUser ? JSON.parse(storageUser) : null
+
+        axios
+            .get(`${BASE_URL}companies/${user.nusp_cnpj}`)
+            .then(response => setCompany(response.data))
+    }, [])
+
     return (
         <CenterView>
             <Hbox>
@@ -27,7 +42,7 @@ export const AboutPage = () => {
                 <Col size={1}>
                     <Input
                         label="Nome da empresa"
-                        value={MOCK_COMPANY.name}
+                        value={company?.corporateName}
                         disabled
                     />
                 </Col>
@@ -35,13 +50,13 @@ export const AboutPage = () => {
 
             <Row>
                 <Col size={1} minWidth={100}>
-                    <Input label="CNPJ" value={MOCK_COMPANY.cnpj} disabled />
+                    <Input label="CNPJ" value={company?.cnpj} disabled />
                 </Col>
                 <Separator horizontal size={Spacing.Small} />
                 <Col size={1} minWidth={100}>
                     <Input
                         label="Área de atuação"
-                        value={MOCK_COMPANY.area}
+                        value={company?.field}
                         disabled
                     />
                 </Col>
@@ -49,25 +64,33 @@ export const AboutPage = () => {
 
             <Row>
                 <Col size={4} minWidth={100}>
-                    <Input
-                        label="Endereço"
-                        value={MOCK_COMPANY.street}
-                        disabled
-                    />
-                </Col>
-                <Separator horizontal size={Spacing.Small} />
-                <Col minWidth={10}>
-                    <Input
-                        label="Número"
-                        value={MOCK_COMPANY.number}
-                        disabled
-                    />
+                    <Input label="Endereço" value={company?.address} disabled />
                 </Col>
             </Row>
 
             <Row>
-                <Col>
-                    <Input label="Email" value={MOCK_COMPANY.email} disabled />
+                <Col size={1} minWidth={100}>
+                    <Input
+                        label="Nome do Representante"
+                        value={company?.hrContactName}
+                        disabled
+                    />
+                </Col>
+                <Separator horizontal size={Spacing.Small} />
+                <Col size={1} minWidth={100}>
+                    <Input
+                        label="Email RH"
+                        value={company?.hrContactEmail}
+                        disabled
+                    />
+                </Col>
+                <Separator horizontal size={Spacing.Small} />
+                <Col size={1} minWidth={100}>
+                    <Input
+                        label="Telefone RH"
+                        value={company?.hrContactPhone}
+                        disabled
+                    />
                 </Col>
             </Row>
 
@@ -75,7 +98,7 @@ export const AboutPage = () => {
                 <Col>
                     <Input
                         label="Telefone para contato"
-                        value={MOCK_COMPANY.phone}
+                        value={company?.phone}
                         disabled
                     />
                 </Col>
