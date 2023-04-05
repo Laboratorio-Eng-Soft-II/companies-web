@@ -81,11 +81,11 @@ export const CompanySignUpPage = () => {
                     message="Empresa criada com sucesso!"
                     action={
                         <AntdButton
-                            onClick={() => navigate(AppPath.companies.home)}
+                            onClick={() => navigate(AppPath.companies.login)}
                             type="link"
                             size="small"
                         >
-                            IR PARA HOME
+                            IR PARA LOGIN
                         </AntdButton>
                     }
                 />
