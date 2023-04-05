@@ -35,8 +35,6 @@ export const MOCK_POSITIONS = [
     },
 ]
 
-const cnpj = '123'
-
 export interface PositionModel {
     type: string
     description: string
@@ -53,11 +51,15 @@ export const PositionsPage: React.FC = () => {
 
     const [positions, setPositions] = useState<PositionModel[]>()
 
+    const storedUser = localStorage.getItem('user')
+    const user = storedUser ? JSON.parse(storedUser) : {}
+    const cnpj = user.nusp_cnpj
+
     useEffect(() => {
         axios
             .get(`${POSITIONS_BASE_URL}positions/${cnpj}`)
             .then(response => setPositions(response.data))
-    }, [])
+    }, [cnpj])
 
     return (
         <Container>

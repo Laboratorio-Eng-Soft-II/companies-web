@@ -24,10 +24,8 @@ export const PositionDetailsPage: React.FC = () => {
 
     useEffect(() => {
         axios
-            .get(`${POSITIONS_BASE_URL}positions/${cnpj}`)
-            .then(response =>
-                setPosition(response.data.find((item: any) => item.id === id)),
-            )
+            .get(`${POSITIONS_BASE_URL}positions/get/${id}`)
+            .then(response => setPosition(response.data))
     }, [cnpj, id])
 
     const navigate = useNavigate()
