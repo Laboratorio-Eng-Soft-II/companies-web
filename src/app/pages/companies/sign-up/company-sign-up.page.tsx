@@ -40,6 +40,8 @@ export const CompanySignUpPage = () => {
 
     const [form] = Form.useForm()
 
+    const [cnpj, setCnpj] = useState('')
+
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         const {
             corporateName,
@@ -49,7 +51,6 @@ export const CompanySignUpPage = () => {
             hrContactEmail,
             hrContactName,
             hrContactPhone,
-            cnpj,
             password,
         } = data
         await axios
@@ -121,6 +122,9 @@ export const CompanySignUpPage = () => {
                                         border: '1px solid #d9d9d9',
                                     }}
                                     placeholder="Digite o CNPJ da empresa"
+                                    onValueChange={value =>
+                                        setCnpj(value.value)
+                                    }
                                 />
                             </Form.Item>
                         </Hbox.Item>

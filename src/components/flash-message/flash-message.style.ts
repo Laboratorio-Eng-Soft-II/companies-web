@@ -5,4 +5,5 @@ export const FlashMessageContainer = styled.div`
     margin: auto;
     top: 10px;
     width: 80%;
+    z-index: 10;
 `

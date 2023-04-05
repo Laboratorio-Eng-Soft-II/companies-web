@@ -16,6 +16,7 @@ import {
     Typography,
     Space,
 } from 'antd'
+import { AppPath } from 'app/routes/app.path'
 
 interface FormState {
     jobTitle: string
@@ -42,15 +43,13 @@ export const PublishJobPage: React.FC = () => {
     const [salary, setSalary] = useState<number>()
     const [showAlert, setShowAlert] = useState(false)
 
+    const storedUser = localStorage.getItem('user')
+    const user = storedUser ? JSON.parse(storedUser) : {}
+    const cnpj = user.nusp_cnpj
+
     const onSubmit: SubmitHandler<FormState> = async data => {
-        const {
-            cnpj,
-            jobTitle,
-            description,
-            activities,
-            benefits,
-            requirements,
-        } = data
+        const { jobTitle, description, activities, benefits, requirements } =
+            data
 
         try {
             await axios.post(`${POSITIONS_BASE_URL}positions`, {
@@ -60,7 +59,7 @@ export const PublishJobPage: React.FC = () => {
                 main_work: activities,
                 benefits,
                 salary,
-                requirements,
+                required_skills: requirements,
             })
             setShowAlert(true)
         } catch (error) {
@@ -76,6 +75,15 @@ export const PublishJobPage: React.FC = () => {
                     showIcon
                     message="Vaga criada com sucesso"
                     afterClose={() => setShowAlert(false)}
+                    type="success"
+                    action={
+                        <AntdButton
+                            type="link"
+                            onClick={() => navigation(AppPath.companies.home)}
+                        >
+                            IR PARA HOME
+                        </AntdButton>
+                    }
                 />
             )}
             <H1>Internship 4.0 - Portal de estágios</H1>
@@ -127,20 +135,6 @@ export const PublishJobPage: React.FC = () => {
                                 border: '1px solid #d9d9d9',
                             }}
                             onValueChange={value => setSalary(value.floatValue)}
-                        />
-                    </Form.Item>
-
-                    <Form.Item name="cnpj" label="CNPJ da empresa">
-                        <PatternFormat
-                            format="##.###.###/####-##"
-                            style={{
-                                width: '100%',
-                                borderRadius: '8px',
-                                height: '32px',
-                                padding: '8px',
-                                border: '1px solid #d9d9d9',
-                            }}
-                            placeholder="Digite o CNPJ da empresa"
                         />
                     </Form.Item>
 

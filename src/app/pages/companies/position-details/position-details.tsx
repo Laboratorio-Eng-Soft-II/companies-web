@@ -30,6 +30,8 @@ export const PositionDetailsPage: React.FC = () => {
 
     const navigate = useNavigate()
 
+    console.log(position)
+
     return (
         <CenterView>
             <img
@@ -67,7 +69,7 @@ export const PositionDetailsPage: React.FC = () => {
                             <SelectField
                                 defaultValue={position?.required_skills}
                                 label="Requisitos"
-                                options={position?.required_skills.map(
+                                options={position?.required_skills?.map(
                                     value => {
                                         return { value, label: value }
                                     },

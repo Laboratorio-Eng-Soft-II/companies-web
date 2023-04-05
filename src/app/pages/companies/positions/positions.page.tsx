@@ -54,12 +54,15 @@ export const PositionsPage: React.FC = () => {
     const storedUser = localStorage.getItem('user')
     const user = storedUser ? JSON.parse(storedUser) : {}
     const cnpj = user.nusp_cnpj
+    console.log(cnpj)
 
     useEffect(() => {
         axios
             .get(`${POSITIONS_BASE_URL}positions/${cnpj}`)
             .then(response => setPositions(response.data))
     }, [cnpj])
+
+    console.log(positions)
 
     return (
         <Container>
