@@ -9,21 +9,13 @@ import { FlashMessage } from 'components/flash-message/flash-message'
 import { PatternFormat } from 'react-number-format'
 import { useNavigate } from 'react-router-dom'
 import { AppPath } from 'app/routes/app.path'
-import {
-    Button as AntdButton,
-    Card,
-    Typography,
-    Input,
-    Form,
-    InputNumber,
-} from 'antd'
+import { Button as AntdButton, Card, Typography, Input, Form } from 'antd'
 
 interface IFormInput {
     corporateName: string
     cnpj: string
     field: string
     address: string
-    number: string
     phone: string
     hrContactEmail: string
     hrContactName: string
@@ -65,9 +57,7 @@ export const CompanySignUpPage = () => {
                 hrContactPhone,
                 password,
             })
-            .then(response => {
-                setShowAlert(true)
-            })
+            .then(() => setShowAlert(true))
             .catch(error => console.log(error))
     }
     return (
@@ -136,23 +126,9 @@ export const CompanySignUpPage = () => {
                         </Hbox.Item>
                     </Hbox>
                     <Separator />
-                    <Hbox>
-                        <Hbox.Item grow>
-                            <Form.Item name="address" label="Endereço">
-                                <Input placeholder="Digite o endereço da empresa" />
-                            </Form.Item>
-                        </Hbox.Item>
-                        <Hbox.Separator />
-                        <Hbox.Item>
-                            <Form.Item
-                                name="number"
-                                label="Número"
-                                style={{ flex: 1 }}
-                            >
-                                <InputNumber placeholder="Número" />
-                            </Form.Item>
-                        </Hbox.Item>
-                    </Hbox>
+                    <Form.Item name="address" label="Endereço">
+                        <Input placeholder="Digite o endereço da empresa" />
+                    </Form.Item>
                     <Separator />
                     <Hbox>
                         <Hbox.Item grow>
