@@ -2,7 +2,7 @@ import { CenterView } from '../../../../components/center-view/center-view.style
 import { SubmitHandler } from 'react-hook-form'
 import { H1 } from '../../../../theme'
 import { useNavigate } from 'react-router-dom'
-import { NumericFormat, PatternFormat } from 'react-number-format'
+import { NumericFormat } from 'react-number-format'
 import axios from 'axios'
 import { useState } from 'react'
 import { POSITIONS_BASE_URL } from 'utils'
