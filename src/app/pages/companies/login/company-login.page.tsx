@@ -21,13 +21,14 @@ export const CompanyLoginPage = () => {
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         const { email, password } = data
+        console.log(email)
 
         try {
             const result = await axios.post(`${AUTH_BASE_URL}get-token`, {
                 email,
                 password,
             })
-            localStorage.setItem('user', JSON.stringify(result))
+            localStorage.setItem('user', JSON.stringify(result.data))
             navigate(AppPath.companies.home)
         } catch (error) {
             console.log(error)
