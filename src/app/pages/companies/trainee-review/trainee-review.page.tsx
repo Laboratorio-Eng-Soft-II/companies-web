@@ -1,22 +1,38 @@
-import logoPoli from '../../../../assets/LogoEPUSP.png'
 import { CenterView } from '../../../../components/center-view/center-view.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Controller, useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '../../../../components/input'
 import { Button } from '../../../../components/button'
-import { H1, H2, LinkButton } from '../../../../theme'
+import { Button as AntdButton } from 'antd'
+import { H2, LinkButton } from '../../../../theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { StarRating } from 'components/star-rating/star-rating'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react'
 import { InputLabel } from 'components/input/input-styles'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { FEEDBACK_BASE_URL } from 'utils'
+import { COMPANIES_BASE_URL, STUDENTS_BASE_URL } from 'utils'
+import { SelectField } from 'components/select'
+import { FlashMessage } from 'components/flash-message/flash-message'
+import { AppPath } from 'app/routes/app.path'
 
 interface FormState {
-    traineeName: string
-    ratings: number[]
     comment: string
+}
+
+interface StudentModel {
+    nusp: string
+    address: string
+    current_quarter: number
+    name: string
+    phone: string
+    skills: string[]
+    usp_email: string
+}
+
+interface StudentOption {
+    name: string
+    nusp: string
 }
 
 const availableRatings = [1, 2, 3, 4, 5]
@@ -29,31 +45,47 @@ const questions = [
 ]
 
 export const TraineeReviewPage: React.FC = () => {
+    const [showAlert, setShowAlert] = useState(false)
+
     const { control, handleSubmit } = useForm<FormState>({
-        defaultValues: {
-            traineeName: '',
-            ratings: new Array(questions.length).fill(1),
-            comment: '',
-        },
+        defaultValues: { comment: '' },
     })
 
     const onSubmit: SubmitHandler<FormState> = async data => {
-        const { traineeName, comment } = data
-        data.ratings = activeRatings
+        const storageUser = localStorage.getItem('user')
+        const user = storageUser ? JSON.parse(storageUser) : null
+
+        const { comment } = data
         console.log(data)
 
-        await axios.post(`${FEEDBACK_BASE_URL}feedback`, {
-            target: traineeName,
-            author: 'Teste',
-            answers: data.ratings,
-            comments: comment,
-            nusp_cnpj: '11262601',
-        })
+        await axios
+            .post(`${COMPANIES_BASE_URL}companies/${user.nusp_cnpj}/feedback`, {
+                author_nusp_cnpj: user.nusp_cnpj,
+                target_nusp_cnpj: selectedStudent,
+                answers: activeRatings,
+                comments: comment,
+            })
+            .then(() => setShowAlert(true))
+            .catch(error => console.log(error))
     }
 
     const [activeRatings, setActiveRatings] = useState<number[]>(
         new Array(questions.length).fill(1),
     )
+
+    const [students, setStudents] = useState<StudentOption[]>()
+    const [selectedStudent, setSelectedStudent] = useState<string>()
+
+    useEffect(() => {
+        axios.get(`${STUDENTS_BASE_URL}students`).then(res => {
+            var response: StudentOption[] = []
+            res.data.map((option: StudentModel) => {
+                response.push({ name: option.name, nusp: option.nusp })
+                return '' // Evitando erro de map sem return
+            })
+            setStudents(response)
+        })
+    }, [])
 
     const handleUpdateRating = (
         setActiveRatings: Dispatch<SetStateAction<number[]>>,
@@ -69,28 +101,38 @@ export const TraineeReviewPage: React.FC = () => {
 
     return (
         <CenterView>
-            <img
-                width="100px"
-                height="100px"
-                src={logoPoli}
-                alt="logo da Poli"
-            ></img>
-            <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
+            {showAlert && (
+                <FlashMessage
+                    banner
+                    showIcon
+                    type="success"
+                    afterClose={() => setShowAlert(false)}
+                    message="Empresa criada com sucesso!"
+                    action={
+                        <AntdButton
+                            onClick={() => navigation(AppPath.companies.home)}
+                            type="link"
+                            size="small"
+                        >
+                            IR PARA HOME
+                        </AntdButton>
+                    }
+                />
+            )}
+
             <H2>Avaliação - Estagiário</H2>
 
             <form onSubmit={handleSubmit(onSubmit)} style={{ width: '70%' }}>
                 <Row>
                     <Col>
-                        <Controller
-                            name="traineeName"
-                            control={control}
-                            render={({ field }) => (
-                                <Input
-                                    label="Nome do estagiário"
-                                    placeholder="Digite o nome do estagiário"
-                                    {...field}
-                                />
-                            )}
+                        <SelectField
+                            label="Nome do estagiário"
+                            options={students?.map(value => {
+                                return { value: value.nusp, label: value.name }
+                            })}
+                            onChange={(value: string) =>
+                                setSelectedStudent(value)
+                            }
                         />
                     </Col>
                 </Row>
@@ -142,7 +184,7 @@ export const TraineeReviewPage: React.FC = () => {
                             <Hbox.Item>
                                 <LinkButton
                                     onClick={() =>
-                                        navigation('/companies/home')
+                                        navigation(AppPath.companies.home)
                                     }
                                 >
                                     Voltar

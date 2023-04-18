@@ -7,10 +7,12 @@ import { Spacing } from 'theme'
 
 interface SelectFieldProps extends SelectProps {
     label?: string
+    onChange?: (value: string) => void
 }
 
 export const SelectField: React.FC<SelectFieldProps> = ({
     label,
+    onChange,
     ...others
 }) => {
     return (
@@ -18,7 +20,11 @@ export const SelectField: React.FC<SelectFieldProps> = ({
             <Col>
                 <InputLabel>{label}</InputLabel>
                 <Separator size={Spacing.XSmall} />
-                <Select style={{ width: '100%' }} {...others} />
+                <Select
+                    onChange={onChange}
+                    style={{ width: '100%' }}
+                    {...others}
+                />
             </Col>
         </Row>
     )

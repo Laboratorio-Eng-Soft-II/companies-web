@@ -3,7 +3,7 @@ import { SubmitHandler } from 'react-hook-form'
 import { Spacing } from 'theme'
 import { Hbox, Separator } from '../../../../components/box/box.styles'
 import axios from 'axios'
-import { BASE_URL } from 'utils'
+import { COMPANIES_BASE_URL } from 'utils'
 import { useState } from 'react'
 import { FlashMessage } from 'components/flash-message/flash-message'
 import { PatternFormat } from 'react-number-format'
@@ -46,7 +46,7 @@ export const CompanySignUpPage = () => {
             password,
         } = data
         await axios
-            .post(`${BASE_URL}companies`, {
+            .post(`${COMPANIES_BASE_URL}companies`, {
                 cnpj,
                 corporateName,
                 address,
