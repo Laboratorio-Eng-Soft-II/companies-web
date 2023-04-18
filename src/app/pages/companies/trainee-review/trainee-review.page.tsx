@@ -86,6 +86,7 @@ export const TraineeReviewPage: React.FC = () => {
             var response: StudentOption[] = []
             res.data.map((option: StudentModel) => {
                 response.push({ name: option.name, nusp: option.nusp })
+                return '' // Evitando erro de map sem return
             })
             setStudents(response)
         })
