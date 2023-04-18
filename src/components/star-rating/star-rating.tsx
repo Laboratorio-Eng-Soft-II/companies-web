@@ -1,13 +1,12 @@
 import { StarRatingButtonStyled } from './star-rating.styles'
 
-type Props = {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     isActive: boolean
-    onClick(): void
 }
 
-export const StarRating = ({ isActive, onClick }: Props) => {
+export const StarRating = ({ isActive, ...props }: Props) => {
     return (
-        <StarRatingButtonStyled onClick={onClick}>
+        <StarRatingButtonStyled {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
