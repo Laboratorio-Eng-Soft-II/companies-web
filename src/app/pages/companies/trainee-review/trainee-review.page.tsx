@@ -17,7 +17,6 @@ import { FlashMessage } from 'components/flash-message/flash-message'
 import { AppPath } from 'app/routes/app.path'
 
 interface FormState {
-    ratings: number[]
     comment: string
 }
 
@@ -49,10 +48,7 @@ export const TraineeReviewPage: React.FC = () => {
     const [showAlert, setShowAlert] = useState(false)
 
     const { control, handleSubmit } = useForm<FormState>({
-        defaultValues: {
-            ratings: new Array(questions.length).fill(1),
-            comment: '',
-        },
+        defaultValues: { comment: '' },
     })
 
     const onSubmit: SubmitHandler<FormState> = async data => {
@@ -60,14 +56,13 @@ export const TraineeReviewPage: React.FC = () => {
         const user = storageUser ? JSON.parse(storageUser) : null
 
         const { comment } = data
-        data.ratings = activeRatings
         console.log(data)
 
         await axios
             .post(`${COMPANIES_BASE_URL}companies/${user.nusp_cnpj}/feedback`, {
                 author_nusp_cnpj: user.nusp_cnpj,
                 target_nusp_cnpj: selectedStudent,
-                answers: data.ratings,
+                answers: activeRatings,
                 comments: comment,
             })
             .then(() => setShowAlert(true))
