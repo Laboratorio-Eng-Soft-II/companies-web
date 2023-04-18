@@ -4,7 +4,7 @@ import { Hbox, Separator } from '../../../../components/box/box.styles'
 import { Row, Col } from '../../../../components/grid'
 import { Input } from '../../../../components/input'
 import { useEffect, useState } from 'react'
-import { BASE_URL } from 'utils'
+import { COMPANIES_BASE_URL } from 'utils'
 import axios from 'axios'
 
 interface companyModel {
@@ -26,7 +26,7 @@ export const AboutPage = () => {
         const user = storageUser ? JSON.parse(storageUser) : null
 
         axios
-            .get(`${BASE_URL}companies/${user.nusp_cnpj}`)
+            .get(`${COMPANIES_BASE_URL}companies/${user.nusp_cnpj}`)
             .then(response => setCompany(response.data))
     }, [])
 
