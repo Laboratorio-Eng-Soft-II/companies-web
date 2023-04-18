@@ -146,6 +146,7 @@ export const TraineeReviewPage: React.FC = () => {
                                 <Separator />
                                 {availableRatings.map(rating => (
                                     <StarRating
+                                        type="button"
                                         key={`question${index}-star${rating}`}
                                         isActive={
                                             rating <= activeRatings[index]
