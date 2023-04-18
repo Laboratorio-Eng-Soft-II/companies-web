@@ -6,6 +6,8 @@ import { AppPath } from 'app/routes/app.path'
 import axios from 'axios'
 import { Form, Input, Button, Card, Typography } from 'antd'
 import { AUTH_BASE_URL } from 'utils'
+import { useState } from 'react'
+import { FlashMessage } from 'components/flash-message/flash-message'
 
 interface IFormInput {
     email: string
@@ -15,6 +17,7 @@ interface IFormInput {
 const { Title } = Typography
 
 export const CompanyLoginPage = () => {
+    const [showAlert, setShowAlert] = useState(false)
     const navigate = useNavigate()
 
     const [form] = Form.useForm()
@@ -32,10 +35,30 @@ export const CompanyLoginPage = () => {
             navigate(AppPath.companies.home)
         } catch (error) {
             console.log(error)
+            setShowAlert(true)
         }
     }
+
     return (
         <CenterView>
+            {showAlert && (
+                <FlashMessage
+                    banner
+                    showIcon
+                    type="error"
+                    afterClose={() => setShowAlert(false)}
+                    message="Ocorreu um erro durante o login!"
+                    action={
+                        <Button
+                            type="link"
+                            size="small"
+                            onClick={() => setShowAlert(false)}
+                        >
+                            TENTAR NOVAMENTE
+                        </Button>
+                    }
+                />
+            )}
             <Card
                 bordered={false}
                 style={{ overflow: 'scroll', maxHeight: '95%', width: '80%' }}
