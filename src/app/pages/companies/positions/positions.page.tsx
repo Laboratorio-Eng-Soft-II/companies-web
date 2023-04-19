@@ -1,7 +1,6 @@
 import { Hbox, Separator } from 'components/box/box.styles'
 import { TextCard } from 'components/text-card'
-import logoPoli from '../../../../assets/LogoEPUSP.png'
-import { H1, H2, LinkButton, Spacing } from '../../../../theme'
+import { LinkButton, Spacing } from '../../../../theme'
 import { CardsContainer, Container } from '../home/styles'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
