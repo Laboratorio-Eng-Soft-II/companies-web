@@ -102,7 +102,7 @@ export const PublishJobPage: React.FC = () => {
                         <Input.TextArea placeholder="Adicione um descrição à vaga" />
                     </Form.Item>
 
-                    <Form.Item name="requirements" label="Requisitions">
+                    <Form.Item name="requirements" label="Requisitos">
                         <Select
                             mode="multiple"
                             allowClear

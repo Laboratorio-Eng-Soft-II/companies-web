@@ -1,39 +1,17 @@
 import { Hbox, Separator } from 'components/box/box.styles'
 import { TextCard } from 'components/text-card'
-import logoPoli from '../../../../assets/LogoEPUSP.png'
-import { H1, H2, LinkButton, Spacing } from '../../../../theme'
-import { Container } from '../home/styles'
+import { LinkButton, Spacing } from '../../../../theme'
+import { CardsContainer, Container } from '../home/styles'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Fragment, useEffect, useState } from 'react'
 import { POSITIONS_BASE_URL } from 'utils'
-
-export const MOCK_POSITIONS = [
-    {
-        title: 'Vaga 1',
-        description: 'Descrição sobre a vaga 1',
-        requirements: [],
-        activities: 'Desenvolvimento front-end de um aplicativo mobile',
-        salary: 4000,
-        id: '1',
-    },
-    {
-        title: 'Vaga 2',
-        description: 'Descrição sobre a vaga 2',
-        requirements: [],
-        activities: 'Desenvolvimento back-end de um servidor',
-        salary: 5000,
-        id: '2',
-    },
-    {
-        title: 'Vaga 3',
-        description: 'Descrição sobre a vaga 3',
-        requirements: [],
-        activities: 'Desenvolvimento full stack',
-        salary: 6000,
-        id: '3',
-    },
-]
+import { Card } from 'components'
+import {
+    faCheck,
+    faListAlt,
+    faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons'
 
 export interface PositionModel {
     type: string
@@ -44,6 +22,7 @@ export interface PositionModel {
     id: string
     cnpj: string
     benefits: string
+    approved: string
 }
 
 export const PositionsPage: React.FC = () => {
@@ -54,7 +33,6 @@ export const PositionsPage: React.FC = () => {
     const storedUser = localStorage.getItem('user')
     const user = storedUser ? JSON.parse(storedUser) : {}
     const cnpj = user.nusp_cnpj
-    console.log(cnpj)
 
     useEffect(() => {
         axios
@@ -62,18 +40,38 @@ export const PositionsPage: React.FC = () => {
             .then(response => setPositions(response.data))
     }, [cnpj])
 
-    console.log(positions)
+    const FilterPositionsByStatus = (status: string) => {
+        axios.get(`${POSITIONS_BASE_URL}positions/${cnpj}`).then(response => {
+            setPositions(
+                response.data.filter(
+                    (position: PositionModel) => position.approved === status,
+                ),
+            )
+        })
+    }
 
     return (
         <Container>
-            <img
-                width="100px"
-                height="100px"
-                src={logoPoli}
-                alt="logo da Poli"
-            ></img>
-            <H1 textAlign="center">Internship 4.0 - Portal de estágios</H1>
-            <H2>Todas as vagas</H2>
+            <CardsContainer>
+                <Card
+                    icon={faXmarkCircle}
+                    title="Recusadas"
+                    onClick={() => FilterPositionsByStatus('rejected')}
+                />
+                <Card
+                    icon={faListAlt}
+                    title="Pendentes"
+                    onClick={() => FilterPositionsByStatus('pending')}
+                />
+                <Card
+                    icon={faCheck}
+                    title="Aprovadas"
+                    onClick={() => FilterPositionsByStatus('approved')}
+                />
+            </CardsContainer>
+
+            <Separator />
+
             {positions?.map((position, index) => (
                 <Fragment key={`${position}-${index}`}>
                     <TextCard
