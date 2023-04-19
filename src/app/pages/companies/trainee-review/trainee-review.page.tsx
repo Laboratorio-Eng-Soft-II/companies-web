@@ -21,16 +21,6 @@ interface FormState {
 }
 
 interface StudentModel {
-    nusp: string
-    address: string
-    current_quarter: number
-    name: string
-    phone: string
-    skills: string[]
-    usp_email: string
-}
-
-interface StudentOption {
     name: string
     nusp: string
 }
@@ -56,29 +46,33 @@ export const TraineeReviewPage: React.FC = () => {
         const user = storageUser ? JSON.parse(storageUser) : null
 
         const { comment } = data
-        console.log(data)
 
-        await axios
-            .post(`${COMPANIES_BASE_URL}companies/${user.nusp_cnpj}/feedback`, {
-                author_nusp_cnpj: user.nusp_cnpj,
-                target_nusp_cnpj: selectedStudent,
-                answers: activeRatings,
-                comments: comment,
-            })
-            .then(() => setShowAlert(true))
-            .catch(error => console.log(error))
+        if (selectedStudent) {
+            await axios
+                .post(
+                    `${COMPANIES_BASE_URL}companies/${user.nusp_cnpj}/feedback`,
+                    {
+                        author_nusp_cnpj: user.nusp_cnpj,
+                        target_nusp_cnpj: selectedStudent,
+                        answers: activeRatings,
+                        comments: comment,
+                    },
+                )
+                .then(() => setShowAlert(true))
+                .catch(error => console.log(error))
+        }
     }
 
     const [activeRatings, setActiveRatings] = useState<number[]>(
         new Array(questions.length).fill(1),
     )
 
-    const [students, setStudents] = useState<StudentOption[]>()
+    const [students, setStudents] = useState<StudentModel[]>()
     const [selectedStudent, setSelectedStudent] = useState<string>()
 
     useEffect(() => {
         axios.get(`${STUDENTS_BASE_URL}students`).then(res => {
-            var response: StudentOption[] = []
+            var response: StudentModel[] = []
             res.data.map((option: StudentModel) => {
                 response.push({ name: option.name, nusp: option.nusp })
                 return '' // Evitando erro de map sem return
